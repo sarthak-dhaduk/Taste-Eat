@@ -62,7 +62,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Code - Manu Of Food Items][product-screenshot]]()
+
+[![View - Manu Of Food Items][product-screenshot-2]]()
 
 There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
@@ -222,7 +224,8 @@ Second Person Name - [Jigar Kalariya](mailto:jigarkalariya123@gmail.com) - [@gma
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: assets/img/ss1.png
+[product-screenshot-2]: assets/img/ss2.png
 
 [PHP]: https://img.shields.io/badge/php-000000?style=for-the-badge&logo=php&logoColor=purple
 [PHP-url]: https://www.php.net/

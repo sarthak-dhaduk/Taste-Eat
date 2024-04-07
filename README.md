@@ -145,14 +145,14 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Features
 
-Here is , Some basic features of website.
+* Here is , Some basic features of website.
 
 - [x] Login - Logout.
 - [x] Sign Up.
 - [x] Forgot password with email verification.
 - [x] Profile update.
 
-Advanced features of website
+* Advanced features of website
 
 - [x] Filter the food items.
 - [x] Order the food items.
@@ -162,7 +162,7 @@ Advanced features of website
 - [x] Complain and contact to the admin.
   - [x] User can delete personal Complains.
 
-Administrator has some special features of website like,
+* Administrator has some special features of website like,
 
 - [x] Add new food items and category.
 - [x] Manage cancellation time of an ordered item.

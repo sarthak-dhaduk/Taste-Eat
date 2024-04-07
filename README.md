@@ -4,7 +4,6 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
@@ -16,15 +15,15 @@
     <img src="./admin/assets/img/favicon/favicon2.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">Taste Eat</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    An website where you can search, discover and order food of your choice!
     <br />
     <a href="https://github.com/sarthak-dhaduk/Taste-Eat"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/sarthak-dhaduk/Taste-Eat">View Demo</a>
+    <a href="https://taste-eat.free.nf/">View Demo</a>
     ·
     <a href="https://github.com/sarthak-dhaduk/Taste-Eat/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·

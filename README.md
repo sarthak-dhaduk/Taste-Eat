@@ -51,7 +51,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#Features">Features</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -143,17 +143,38 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 <!-- ROADMAP -->
-## Roadmap
+## Features
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+Here is , Some basic features of website.
 
-See the [open issues](https://github.com/sarthak-dhaduk/Taste-Eat/issues) for a full list of proposed features (and known issues).
+- [x] Login - Logout.
+- [x] Sign Up.
+- [x] Forgot password with email verification.
+- [x] Profile update.
+
+Advanced features of website
+
+- [x] Filter the food items.
+- [x] Order the food items.
+  - [x] User can cancel personal order within the fix time limit.
+- [x] Review and raiting the food items.
+  - [x] User can delete personal Review and raiting about food.
+- [x] Complain and contact to the admin.
+  - [x] User can delete personal Complains.
+
+Administrator has some special features of website like,
+
+- [x] Add new food items and category.
+- [x] Manage cancellation time of an ordered item.
+- [x] Edit, Update & Delete data from admin panel.
+    - [x] Item Data.
+    - [x] Category Data.
+    - [x] Issue Data.
+    - [x] Review & Rating Data.
+    - [x] Contact Data.
+    - [x] User Data.
+
+Feel free  to [Ask](https://github.com/sarthak-dhaduk/Taste-Eat/issues/new?labels=question&template=feature-request---.md) anything about these features.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -177,21 +198,12 @@ Don't forget to give the project a star! Thanks again!
 
 
 
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [Sarthak Dhaduk](sarthakdhaduk1111@gmail.com) - [@gmail.com](sarthakdhaduk1111@gmail.com)
+First Person Name - [Sarthak Dhaduk](mailto:sarthakdhaduk1111@gmail.com) - [@gmail.com](mailto:sarthakdhaduk1111@gmail.com)
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Second Person Name - [Jigar Kalariya](mailto:jigarkalariya123@gmail.com) - [@gmail.com](mailto:jigarkalariya123@gmail.com)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

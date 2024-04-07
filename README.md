@@ -12,7 +12,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/sarthak-dhaduk/Taste-Eat">
-    <img src="assets/img/logo2.png" alt="Logo" width="140" height="70">
+    <img src="assets/img/logo2.png" alt="Logo" width="185" height="70">
   </a>
 
   <h3 align="center">Taste Eat</h3>

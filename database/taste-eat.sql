@@ -204,7 +204,7 @@ CREATE TABLE `register` (
 INSERT INTO `register` (`username`, `email`, `password`, `user`, `profilepic`, `token`) VALUES
 ('Jigar', 'jkalariya487@rku.ac.in', '1234567@Jj', 'user', '65ef71a91b481JP.jpg', '65e9dc0eee7b5'),
 ('Rock', 'rock1star14@gmail.com', '1234567@Rr', 'user', '65f44034c4fd3Picsart_23-11-09_16-31-26-759.jpg', '65f0b65e7953a'),
-('Sarthak', 'sdhaduk666@rku.ac.in', '123456@Sd', 'admin', '65f43eb08b4d8Picsart_22-12-05_19-16-54-887 - Copy.jpg', '65e9dcfe4311c');
+('Admin', 'admin@gmail.com', '123456#Admin', 'admin', '65f43eb08b4d8Picsart_22-12-05_19-16-54-887 - Copy.jpg', '65e9dcfe4311c');
 
 -- --------------------------------------------------------
 

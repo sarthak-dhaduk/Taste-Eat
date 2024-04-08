@@ -110,6 +110,19 @@ Here, Some instructions are given how you can run the code locally or use it as 
   taste-eat
   ```
 
+* Admin Panel Username, Email Id And Password Is,
+  Username ```sh
+  Admin
+  ```
+
+  Email Id ```sh
+  admin@gmail.com
+  ```
+
+  Password ```sh
+  123456#Admin
+  ```
+
 * Import `taste_eat.sql` file from `/database/` directory into newly created database.
 
 ### Installation

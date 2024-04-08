@@ -110,16 +110,18 @@ Here, Some instructions are given how you can run the code locally or use it as 
   taste-eat
   ```
 
-* Admin Panel Username, Email Id And Password Is,
-  Username ```sh
+* Admin Panel Username Is,
+  ```sh
   Admin
   ```
 
-  Email Id ```sh
+* Admin Panel Email Id Is,
+  ```sh
   admin@gmail.com
   ```
 
-  Password ```sh
+* Admin Panel Password Is,
+  ```sh
   123456#Admin
   ```
 

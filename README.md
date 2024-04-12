@@ -110,6 +110,21 @@ Here, Some instructions are given how you can run the code locally or use it as 
   taste-eat
   ```
 
+* Admin Panel Username Is,
+  ```sh
+  Admin
+  ```
+
+* Admin Panel Email Id Is,
+  ```sh
+  admin@gmail.com
+  ```
+
+* Admin Panel Password Is,
+  ```sh
+  123456#Admin
+  ```
+
 * Import `taste_eat.sql` file from `/database/` directory into newly created database.
 
 ### Installation
@@ -213,7 +228,7 @@ Second Person Name - [Jigar Kalariya](mailto:jigarkalariya123@gmail.com) - [@gma
 [issues-shield]: https://img.shields.io/github/issues/sarthak-dhaduk/Taste-Eat.svg?style=for-the-badge
 [issues-url]: https://github.com/sarthak-dhaduk/Taste-Eat/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
+[linkedin-url]: https://linkedin.com/in/sarthak-dhaduk
 
 [product-screenshot]: assets/img/ss1.png
 [product-screenshot-2]: assets/img/ss2.png

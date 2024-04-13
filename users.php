@@ -51,55 +51,139 @@
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                                <h5 class="modal-title" id="modalCenterTitle">Edit user</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-                              <form method="post" action="users.php" enctype="multipart/form-data">
+                              <form method="post" action="users.php" enctype="multipart/form-data" id="editReviewForm">
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">User Name</label>
                                       <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['username']; ?>" name="edit_username<?php echo $roww['username']; ?>" />
+                                      <span class="error-message" style="color: red; display: none;">User Name is required.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Email</label>
                                       <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['username']; ?>" />
+                                      <span class="error-message" style="color: red; display: none;">Email is required.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Password</label>
                                       <input type="password" id="nameWithTitle" class="form-control" placeholder="Enter Password" value="<?php echo $roww['password']; ?>" name="edit_pwd<?php echo $roww['username']; ?>" />
+                                      <span class="error-message" style="color: red; display: none;">Password is required.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
-                                      <label for="nameWithTitle" class="form-label">Conform Password</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Conform Password" value="<?php echo $roww['password']; ?>" name="edit_cpwd<?php echo $roww['username']; ?>" />
+                                      <label for="nameWithTitle" class="form-label">Confirm Password</label>
+                                      <input type="password" id="nameWithTitle" class="form-control" placeholder="Enter Confirm Password" value="<?php echo $roww['password']; ?>" name="edit_cpwd<?php echo $roww['username']; ?>" />
+                                      <span class="error-message" style="color: red; display: none;">Please confirm your password.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Role</label>
                                       <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Role" value="<?php echo $roww['user']; ?>" name="edit_user<?php echo $roww['username']; ?>" />
+                                      <span class="error-message" style="color: red; display: none;">Role is required.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="formFile" class="form-label">Profile Image</label>
                                       <input class="form-control" type="file" id="formFile" name="edit_profilepic<?php echo $roww['username']; ?>">
+                                      <span class="error-message" style="color: red; display: none;">Only JPG, JPEG, and PNG files are allowed.</span>
                                     </div>
                                   </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                    Close
-                                  </button>
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                                   <button type="submit" class="btn btn-primary" name="edit_add<?php echo $roww['username']; ?>">Update</button>
                                 </div>
                               </form>
+
+                              <script>
+                                $(document).ready(function() {
+                                  $('#editReviewForm').submit(function(event) {
+                                    var userName = $('input[name="edit_username<?php echo $roww['username']; ?>"]').val();
+                                    var email = $('input[name="edit_email<?php echo $roww['username']; ?>"]').val();
+                                    var password = $('input[name="edit_pwd<?php echo $roww['username']; ?>"]').val();
+                                    var confirmPassword = $('input[name="edit_cpwd<?php echo $roww['username']; ?>"]').val();
+                                    var role = $('input[name="edit_user<?php echo $roww['username']; ?>"]').val();
+                                    var profileImage = $('input[name="edit_profilepic<?php echo $roww['username']; ?>"]').val();
+
+                                    var isValid = true;
+
+                                    if (userName.trim() === '') {
+                                      $('input[name="edit_username<?php echo $roww['username']; ?>"]').css('border-color', 'red');
+                                      $('input[name="edit_username<?php echo $roww['username']; ?>"]').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('input[name="edit_username<?php echo $roww['username']; ?>"]').css('border-color', '');
+                                      $('input[name="edit_username<?php echo $roww['username']; ?>"]').siblings('.error-message').hide();
+                                    }
+
+                                    if (email.trim() === '') {
+                                      $('input[name="edit_email<?php echo $roww['username']; ?>"]').css('border-color', 'red');
+                                      $('input[name="edit_email<?php echo $roww['username']; ?>"]').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('input[name="edit_email<?php echo $roww['username']; ?>"]').css('border-color', '');
+                                      $('input[name="edit_email<?php echo $roww['username']; ?>"]').siblings('.error-message').hide();
+                                    }
+
+                                    if (password.trim() === '') {
+                                      $('input[name="edit_pwd<?php echo $roww['username']; ?>"]').css('border-color', 'red');
+                                      $('input[name="edit_pwd<?php echo $roww['username']; ?>"]').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('input[name="edit_pwd<?php echo $roww['username']; ?>"]').css('border-color', '');
+                                      $('input[name="edit_pwd<?php echo $roww['username']; ?>"]').siblings('.error-message').hide();
+                                    }
+
+                                    if (confirmPassword.trim() === '') {
+                                      $('input[name="edit_cpwd<?php echo $roww['username']; ?>"]').css('border-color', 'red');
+                                      $('input[name="edit_cpwd<?php echo $roww['username']; ?>"]').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('input[name="edit_cpwd<?php echo $roww['username']; ?>"]').css('border-color', '');
+                                      $('input[name="edit_cpwd<?php echo $roww['username']; ?>"]').siblings('.error-message').hide();
+                                    }
+
+                                    if (role.trim() === '') {
+                                      $('input[name="edit_user<?php echo $roww['username']; ?>"]').css('border-color', 'red');
+                                      $('input[name="edit_user<?php echo $roww['username']; ?>"]').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('input[name="edit_user<?php echo $roww['username']; ?>"]').css('border-color', '');
+                                      $('input[name="edit_user<?php echo $roww['username']; ?>"]').siblings('.error-message').hide();
+                                    }
+
+                                    if (profileImage.trim() !== '') {
+                                      var extension = profileImage.split('.').pop().toLowerCase();
+                                      if (['jpg', 'jpeg', 'png'].indexOf(extension) === -1) {
+                                        $('input[name="edit_profilepic<?php echo $roww['username']; ?>"]').css('border-color', 'red');
+                                        $('input[name="edit_profilepic<?php echo $roww['username']; ?>"]').siblings('.error-message').show();
+                                        isValid = false;
+                                      } else {
+                                        $('input[name="edit_profilepic<?php echo $roww['username']; ?>"]').css('border-color', '');
+                                        $('input[name="edit_profilepic<?php echo $roww['username']; ?>"]').siblings('.error-message').hide();
+                                      }
+                                    }
+
+                                    return isValid;
+                                  });
+
+                                  $('#editReviewForm input').on('input', function() {
+                                    $(this).css('border-color', '');
+                                    $(this).siblings('.error-message').hide();
+                                  });
+                                });
+                              </script>
+
 
                               <?php
                               if (isset($_POST['edit_add' . $up_username])) {

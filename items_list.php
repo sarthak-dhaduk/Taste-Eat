@@ -376,7 +376,31 @@
                     </ul>
                   </td>
                   <td><?php echo $roww['price']; ?></td>
-                  <td><?php echo $roww['description']; ?></td>
+                  <td>
+                    <div class="cut-text">
+                      <?php
+                      $description = $roww['description'];
+                      $words = explode(" ", $description);
+                      $trimmed = implode(" ", array_slice($words, 0, 10)); // Display first 10 words
+                      echo htmlspecialchars($trimmed, ENT_QUOTES, 'UTF-8');
+                      if (count($words) > 10) {
+                        echo '...'; // Display "..." if there are more than 10 words
+                      }
+                      ?>
+                    </div>
+                    <div class="full-text" style="display: none;"><?php echo htmlspecialchars($roww['description'], ENT_QUOTES, 'UTF-8'); ?></div>
+                    <a href="#" class="read-more">Read more</a>
+                  </td>
+                  <script>
+                    $(document).ready(function() {
+                      $('.read-more').click(function(event) {
+                        event.preventDefault();
+                        $(this).parent().find('.cut-text').hide();
+                        $(this).parent().find('.full-text').show();
+                        $(this).hide();
+                      });
+                    });
+                  </script>
                   <td>
                     <div class="d-flex justify-content-around">
                       <div class="btn-group" role="group" aria-label="First group">

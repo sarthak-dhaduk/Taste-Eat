@@ -171,7 +171,39 @@
                         <span class="fw-medium"><?php echo $roww['date']; ?></span>
                       </td>
                       <td><?php echo $roww['subject']; ?></td>
-                      <td><?php echo $roww['description']; ?></td>
+                      <td>
+                        <div class="cut-text">
+                          <?php
+                          $oldissue_id = $roww['issue_id'];
+                          $description = $roww['description'];
+                          $words = explode(" ", $description);
+                          $trimmed = implode(" ", array_slice($words, 0, 5));
+                          echo htmlspecialchars($trimmed, ENT_QUOTES, 'UTF-8');
+                          if (count($words) > 5) {
+                            echo '...';
+                            echo "<br><a href='' class='read-more' data-bs-toggle='modal' data-bs-target='#description$oldissue_id'>Read more</a>";
+                          }
+                          ?>
+                        </div>
+                        <div class="modal fade" id="description<?php echo $roww['issue_id']; ?>" tabindex="-1" style="display: none;" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalLongTitle"><?php echo $roww['item_name']; ?></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" name="edit_description<?php echo $roww['issue_id']; ?>"><?php echo $roww['description']; ?></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                       <td>
                         <div class="d-flex justify-content-around">
                           <div class="btn-group" role="group" aria-label="First group">

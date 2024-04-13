@@ -15,23 +15,41 @@
                 <h5 class="modal-title" id="modalCenterTitle">Add New Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form method="post" action="items_list.php" enctype="multipart/form-data">
+              <form method="post" action="items_list.php" enctype="multipart/form-data" id="newCategoryForm">
                 <div class="modal-body">
                   <div class="row">
                     <div class="col mb-3">
                       <label for="nameWithTitle" class="form-label">New Category</label>
                       <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" name="category_name" />
+                      <span class="error-message" style="display: none; color: red;">This field cannot be empty and should not contain integers.</span>
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                    Close
-                  </button>
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary" name="new_category_add">Add</button>
                 </div>
               </form>
+              <script>
+                $(document).ready(function() {
+                  $('#newCategoryForm').submit(function(event) {
+                    var categoryName = $('input[name="category_name"]').val();
+                    if (categoryName.trim() === '' || /^\d+$/.test(categoryName)) {
+                      $('input[name="category_name"]').css('border-color', 'red');
+                      $('.error-message').show();
+                      event.preventDefault();
+                    } else {
+                      $('input[name="category_name"]').css('border-color', '');
+                      $('.error-message').hide();
+                    }
+                  });
 
+                  $('input[name="category_name"]').on('input', function() {
+                    $(this).css('border-color', '');
+                    $('.error-message').hide();
+                  });
+                });
+              </script>
               <?php
               if (isset($_POST['new_category_add'])) {
 
@@ -87,22 +105,42 @@
                                 <h5 class="modal-title" id="modalCenterTitle">Category Edit</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-                              <form method="post" action="items_list.php" enctype="multipart/form-data">
+                              <form method="post" action="items_list.php" enctype="multipart/form-data" id="editCategoryForm<?php echo $category_roww['category_id']; ?>">
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Category</label>
                                       <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $category_roww['category']; ?>" name="edit_category<?php echo $category_roww['category_id']; ?>" />
+                                      <span class="error-message" style="display: none; color: red;">This field cannot be empty and should not contain integers.</span>
                                     </div>
                                   </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                    Close
-                                  </button>
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                                   <button type="submit" class="btn btn-primary" name="edit_category_btn<?php echo $category_roww['category_id']; ?>">Update</button>
                                 </div>
                               </form>
+                              <script>
+                                $(document).ready(function() {
+                                  $('#editCategoryForm<?php echo $category_roww['category_id']; ?>').submit(function(event) {
+                                    var categoryName = $('input[name="edit_category<?php echo $category_roww['category_id']; ?>"]').val();
+                                    if (categoryName.trim() === '' || /^\d+$/.test(categoryName)) {
+                                      $('input[name="edit_category<?php echo $category_roww['category_id']; ?>"]').css('border-color', 'red');
+                                      $('.error-message').show();
+                                      event.preventDefault();
+                                    } else {
+                                      $('input[name="edit_category<?php echo $category_roww['category_id']; ?>"]').css('border-color', ''); // Reset border color
+                                      $('.error-message').hide();
+                                    }
+                                  });
+
+                                  $('input[name="edit_category<?php echo $category_roww['category_id']; ?>"]').on('input', function() {
+                                    $(this).css('border-color', '');
+                                    $('.error-message').hide();
+                                  });
+                                });
+                              </script>
+
 
                               <?php
                               if (isset($_POST['edit_category_btn' . $up_category_id])) {
@@ -153,21 +191,23 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                <h5 class="modal-title" id="modalCenterTitle">Add Item</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form method="post" action="items_list.php" enctype="multipart/form-data">
+              <form method="post" action="items_list.php" enctype="multipart/form-data" id="addItemForm">
                 <div class="modal-body">
                   <div class="row">
                     <div class="col mb-3">
                       <label for="nameWithTitle" class="form-label">Item Name</label>
                       <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" name="item_name" />
+                      <span class="error-message-name" style="display: none; color: red; font-size: 15px;">This field is required.</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Description</label>
                       <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
+                      <span class="error-message-description" style="display: none; color: red; font-size: 15px;">This field is required.</span>
                     </div>
                   </div>
                   <div class="row">
@@ -192,22 +232,85 @@
                     <div class="col mb-3">
                       <label for="nameWithTitle" class="form-label">Price</label>
                       <input type="number" id="nameWithTitle" class="form-control" placeholder="Enter Price" name="price" />
+                      <span class="error-message-price" style="display: none; color: red; font-size: 15px;">This field is required.</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col mb-3">
                       <label for="formFile" class="form-label">Item Image</label>
                       <input class="form-control" type="file" id="formFile" name="item_image">
+                      <span class="error-message-image" style="display: none; color: red; font-size: 15px;">Please select a valid image file (jpg, jpeg, png).</span>
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                    Close
-                  </button>
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary" name="add">Add</button>
                 </div>
               </form>
+              <script>
+                $(document).ready(function() {
+                  $('#addItemForm').submit(function(event) {
+                    var itemName = $('input[name="item_name"]').val();
+                    var description = $('textarea[name="description"]').val();
+                    var price = $('input[name="price"]').val();
+                    var itemImage = $('input[name="item_image"]').val();
+
+                    if (itemName.trim() === '') {
+                      $('input[name="item_name"]').css('border-color', 'red');
+                      $('.error-message-name').show();
+                      event.preventDefault();
+                    } else {
+                      $('input[name="item_name"]').css('border-color', '');
+                      $('.error-message-name').hide();
+                    }
+
+                    if (description.trim() === '') {
+                      $('textarea[name="description"]').css('border-color', 'red');
+                      $('.error-message-description').show();
+                      event.preventDefault();
+                    } else {
+                      $('textarea[name="description"]').css('border-color', '');
+                      $('.error-message-description').hide();
+                    }
+
+                    if (price.trim() === '') {
+                      $('input[name="price"]').css('border-color', 'red');
+                      $('.error-message-price').show();
+                      event.preventDefault();
+                    } else {
+                      $('input[name="price"]').css('border-color', '');
+                      $('.error-message-price').hide();
+                    }
+
+                    if (!itemImage.match(/(?:jpg|jpeg|png)$/)) {
+                      $('input[name="item_image"]').css('border-color', 'red');
+                      $('.error-message-image').show();
+                      event.preventDefault();
+                    } else {
+                      $('input[name="item_image"]').css('border-color', '');
+                      $('.error-message-image').hide();
+                    }
+                  });
+
+                  $('input[name="item_name"]').on('input', function() {
+                    $(this).css('border-color', '');
+                    $('.error-message-name').hide();
+                  });
+                  $('textarea[name="description"]').on('input', function() {
+                    $(this).css('border-color', '');
+                    $('.error-message-description').hide();
+                  });
+                  $('input[name="price"]').on('input', function() {
+                    $(this).css('border-color', '');
+                    $('.error-message-price').hide();
+                  });
+                  $('input[name="item_image"]').on('change', function() {
+                    $(this).css('border-color', '');
+                    $('.error-message-image').hide();
+                  });
+                });
+              </script>
 
               <?php
               if (isset($_POST['add'])) {
@@ -284,21 +387,23 @@
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                                <h5 class="modal-title" id="modalCenterTitle">Edit Item</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-                              <form method="post" action="items_list.php" enctype="multipart/form-data">
+                              <form method="post" action="items_list.php" enctype="multipart/form-data" id="editItemForm<?php echo $roww['item_id']; ?>">
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Item Name</label>
                                       <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['item_name']; ?>" name="edit_item_name<?php echo $roww['item_id']; ?>" />
+                                      <span class="error-message-name" style="display: none; color: red;">This field is required.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="exampleFormControlTextarea1" class="form-label">Description</label>
                                       <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_description<?php echo $roww['item_id']; ?>"><?php echo $roww['description']; ?></textarea>
+                                      <span class="error-message-description" style="display: none; color: red;">Description should not exceed 300 words.</span>
                                     </div>
                                   </div>
                                   <div class="row">
@@ -323,22 +428,87 @@
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Price</label>
                                       <input type="number" id="nameWithTitle" class="form-control" value="<?php echo $roww['price']; ?>" name="edit_price<?php echo $roww['item_id']; ?>" />
+                                      <span class="error-message-price" style="display: none; color: red;">This field is required.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="formFile" class="form-label">Item Image</label>
-                                      <input class="form-control" type="file" id="formFile" name="edit_item_image<?php echo $roww['item_id']; ?>" required>
+                                      <input class="form-control" type="file" id="formFile" name="edit_item_image<?php echo $roww['item_id']; ?>" accept=".jpg, .jpeg, .png">
+                                      <span class="error-message-image" style="display: none; color: red;">Please select a valid image file (jpg, jpeg, png).</span>
                                     </div>
                                   </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                    Close
-                                  </button>
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                                   <button type="submit" class="btn btn-primary" name="edit_add<?php echo $roww['item_id']; ?>">Update</button>
                                 </div>
                               </form>
+
+                              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                              <script>
+                                $(document).ready(function() {
+                                  $('#editItemForm<?php echo $roww['item_id']; ?>').submit(function(event) {
+                                    var itemName = $('input[name="edit_item_name<?php echo $roww['item_id']; ?>"]').val();
+                                    var description = $('textarea[name="edit_description<?php echo $roww['item_id']; ?>"]').val();
+                                    var price = $('input[name="edit_price<?php echo $roww['item_id']; ?>"]').val();
+                                    var itemImage = $('input[name="edit_item_image<?php echo $roww['item_id']; ?>"]').val();
+
+                                    if (itemName.trim() === '') {
+                                      $('input[name="edit_item_name<?php echo $roww['item_id']; ?>"]').css('border-color', 'red');
+                                      $('.error-message-name').show();
+                                      event.preventDefault();
+                                    } else {
+                                      $('input[name="edit_item_name<?php echo $roww['item_id']; ?>"]').css('border-color', '');
+                                      $('.error-message-name').hide();
+                                    }
+
+                                    if (description.split(' ').length > 300) {
+                                      $('textarea[name="edit_description<?php echo $roww['item_id']; ?>"]').css('border-color', 'red');
+                                      $('.error-message-description').show();
+                                      event.preventDefault();
+                                    } else {
+                                      $('textarea[name="edit_description<?php echo $roww['item_id']; ?>"]').css('border-color', '');
+                                      $('.error-message-description').hide();
+                                    }
+
+                                    if (price.trim() === '') {
+                                      $('input[name="edit_price<?php echo $roww['item_id']; ?>"]').css('border-color', 'red');
+                                      $('.error-message-price').show();
+                                      event.preventDefault();
+                                    } else {
+                                      $('input[name="edit_price<?php echo $roww['item_id']; ?>"]').css('border-color', '');
+                                      $('.error-message-price').hide();
+                                    }
+
+                                    if (!itemImage.match(/(?:jpg|jpeg|png)$/)) {
+                                      $('input[name="edit_item_image<?php echo $roww['item_id']; ?>"]').css('border-color', 'red');
+                                      $('.error-message-image').show();
+                                      event.preventDefault();
+                                    } else {
+                                      $('input[name="edit_item_image<?php echo $roww['item_id']; ?>"]').css('border-color', '');
+                                      $('.error-message-image').hide();
+                                    }
+                                  });
+
+                                  $('input[name="edit_item_name<?php echo $roww['item_id']; ?>"]').on('input', function() {
+                                    $(this).css('border-color', '');
+                                    $('.error-message-name').hide();
+                                  });
+                                  $('textarea[name="edit_description<?php echo $roww['item_id']; ?>"]').on('input', function() {
+                                    $(this).css('border-color', '');
+                                    $('.error-message-description').hide();
+                                  });
+                                  $('input[name="edit_price<?php echo $roww['item_id']; ?>"]').on('input', function() {
+                                    $(this).css('border-color', '');
+                                    $('.error-message-price').hide();
+                                  });
+                                  $('input[name="edit_item_image<?php echo $roww['item_id']; ?>"]').on('change', function() {
+                                    $(this).css('border-color', '');
+                                    $('.error-message-image').hide();
+                                  });
+                                });
+                              </script>
 
                               <?php
                               if (isset($_POST['edit_add' . $up_item_id])) {

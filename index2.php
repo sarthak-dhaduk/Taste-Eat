@@ -35,9 +35,22 @@
 
                     if ($q_update_cancelation_1_result) {
                       header("location:index2.php");
+                      exit;
+                    } else {
+                      echo "Error updating cancelation time.";
                     }
                   }
                   ?>
+                  <script>
+                    $(document).ready(function() {
+                      $('form').submit(function(event) {
+                        var cancelationTime = $('input[name="cancelation_time"]').val();
+                        if (cancelationTime == null || cancelationTime.trim() === '' || cancelationTime == 0) {
+                          $('input[name="cancelation_time"]').val(1);
+                        }
+                      });
+                    });
+                  </script>
                 <?php
                 }
                 ?>

@@ -44,50 +44,117 @@
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                                <h5 class="modal-title" id="modalCenterTitle">Edit Review</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-                              <form method="post" action="reviews.php" enctype="multipart/form-data">
+                              <form id="editReviewForm" method="post" action="reviews.php" enctype="multipart/form-data">
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">User Name</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['review_id']; ?>" />
+                                      <input type="text" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['review_id']; ?>" />
+                                      <span class="error-message" style="color: red; display: none;">User Name is required.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Email</label>
-                                      <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['review_id']; ?>" />
+                                      <input type="email" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['review_id']; ?>" />
+                                      <span class="error-message" style="color: red; display: none;">Email is required.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Item Name</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['item_name']; ?>" name="edit_item_name<?php echo $roww['review_id']; ?>" />
+                                      <input type="text" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['item_name']; ?>" name="edit_item_name<?php echo $roww['review_id']; ?>" />
+                                      <span class="error-message" style="color: red; display: none;">Item Name is required.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_description<?php echo $roww['review_id']; ?>"><?php echo $roww['description']; ?></textarea>
+                                      <textarea class="form-control" id="edit_description" rows="3" name="edit_description<?php echo $roww['review_id']; ?>"><?php echo $roww['description']; ?></textarea>
+                                      <span class="error-message" style="color: red; display: none;">Description is required and should not exceed 300 words.</span>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Rating</label>
-                                      <input type="number" id="nameWithTitle" class="form-control" value="<?php echo $roww['rating']; ?>" name="edit_rating<?php echo $roww['review_id']; ?>" />
+                                      <input type="number" class="form-control" value="<?php echo $roww['rating']; ?>" name="edit_rating<?php echo $roww['review_id']; ?>" />
+                                      <span class="error-message" style="color: red; display: none;">Rating is required.</span>
                                     </div>
                                   </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                    Close
-                                  </button>
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                                   <button type="submit" class="btn btn-primary" name="edit_review<?php echo $roww['review_id']; ?>">Update</button>
                                 </div>
                               </form>
+                              <script>
+                                $(document).ready(function() {
+                                  $('#editReviewForm').submit(function(event) {
+                                    var userName = $('input[name^="edit_user_name"]').val();
+                                    var email = $('input[name^="edit_email"]').val();
+                                    var itemName = $('input[name^="edit_item_name"]').val();
+                                    var description = $('#edit_description').val();
+                                    var rating = $('input[name^="edit_rating"]').val();
 
+                                    var isValid = true;
+
+                                    if (userName.trim() === '') {
+                                      $('input[name^="edit_user_name"]').css('border-color', 'red');
+                                      $('input[name^="edit_user_name"]').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('input[name^="edit_user_name"]').css('border-color', '');
+                                      $('input[name^="edit_user_name"]').siblings('.error-message').hide();
+                                    }
+
+                                    if (email.trim() === '') {
+                                      $('input[name^="edit_email"]').css('border-color', 'red');
+                                      $('input[name^="edit_email"]').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('input[name^="edit_email"]').css('border-color', '');
+                                      $('input[name^="edit_email"]').siblings('.error-message').hide();
+                                    }
+
+                                    if (itemName.trim() === '') {
+                                      $('input[name^="edit_item_name"]').css('border-color', 'red');
+                                      $('input[name^="edit_item_name"]').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('input[name^="edit_item_name"]').css('border-color', '');
+                                      $('input[name^="edit_item_name"]').siblings('.error-message').hide();
+                                    }
+
+                                    if (description.trim() === '') {
+                                      $('#edit_description').css('border-color', 'red');
+                                      $('#edit_description').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('#edit_description').css('border-color', '');
+                                      $('#edit_description').siblings('.error-message').hide();
+                                    }
+
+                                    if (rating.trim() === '') {
+                                      $('input[name^="edit_rating"]').css('border-color', 'red');
+                                      $('input[name^="edit_rating"]').siblings('.error-message').show();
+                                      isValid = false;
+                                    } else {
+                                      $('input[name^="edit_rating"]').css('border-color', '');
+                                      $('input[name^="edit_rating"]').siblings('.error-message').hide();
+                                    }
+
+                                    return isValid;
+                                  });
+
+                                  $('#editReviewForm input, #edit_description').on('input', function() {
+                                    $(this).css('border-color', '');
+                                    $(this).siblings('.error-message').hide();
+                                  });
+                                });
+                              </script>
                               <?php
                               if (isset($_POST['edit_review' . $up_review_id])) {
                                 $edit_user_name = @$_POST['edit_user_name' . $up_review_id];

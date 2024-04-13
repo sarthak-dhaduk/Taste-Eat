@@ -38,6 +38,7 @@
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./admin/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="./admin/assets/vendor/libs/popper/popper.js"></script>
     <script src="./admin/assets/vendor/js/bootstrap.js"></script>

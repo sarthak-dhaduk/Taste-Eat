@@ -72,8 +72,6 @@
 						$subject = @$_POST['contact_subject'];
 						$description = @$_POST['contact_message'];
 
-
-						// contact_id	user_name	email	date	subject	description
 						if ($description != "") {
 
 							$contact_q = "INSERT INTO `contact_us` (`contact_id`, `user_name`, `email`, `date`, `subject`, `description`)VALUES('$contact_id', '$user_name', '$email', '$date', '$subject', '$description')";

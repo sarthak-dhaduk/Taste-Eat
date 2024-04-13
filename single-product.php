@@ -187,6 +187,7 @@ if (mysqli_num_rows($qr2) == 1) {
 												$price =  ($roww['price'] * $quantity);
 												$address =  "https://www.google.com/maps/place/" . @$_POST['address'];
 												$order_date = date('Y-m-d');
+												$payment_status = "Pending";
 
 												$q_cancelation = "SELECT * FROM `cancelation_time`";
 												$q_cancelation_r = mysqli_query($con, $q_cancelation);
@@ -201,12 +202,12 @@ if (mysqli_num_rows($qr2) == 1) {
 
 												if (@$_POST['address'] != "") {
 
-													$order = "INSERT INTO `order` (`order_id`, `user_name`, `email`, `item_name`, `quantity`, `price`, `address`,`date`,`time`)VALUES('$order_id', '$user_name', '$email', '$item_name', '$quantity', '$price', '$address', '$order_date', '$order_time')";
+													$order = "INSERT INTO `order` (`order_id`, `user_name`, `email`, `item_name`, `quantity`, `price`, `address`,`date`,`time`,`payment_status`)VALUES('$order_id', '$user_name', '$email', '$item_name', '$quantity', '$price', '$address', '$order_date', '$order_time','$payment_status')";
 
 													$result1 = mysqli_query($con, $order);
 
 													if ($result1) {
-														// header("location:index.php");
+														header("location:checkout.php?id=$order_id");
 													}
 												}
 											}

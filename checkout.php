@@ -2,7 +2,7 @@
 
 <?php
 $id = $_GET['id'];
-$KEY_API_945549 = "rzp_test_HmDhHu8TzV8rRd";
+$KEY_API_945549 = "rzp_test_k364nkzcSun9MI";
 ?>
 
 <!-- breadcrumb-section -->
@@ -171,18 +171,18 @@ $KEY_API_945549 = "rzp_test_HmDhHu8TzV8rRd";
 						</table>
 						<form class="m-3" action="" method="POST">
 							<script
-								src="https://checkout.razorpay.com/v1/checkout.js"
+								src="assets/js/checkout.js"
 								data-key="<?php echo $KEY_API_945549; ?>"
-								data-amount="100"
+								data-amount="<?php echo intval($total_amount*10000);?>"
 								data-currency="INR"
 								data-order_id="order_CgmcjRh9ti2lP7"
 								data-buttontext="Pay Now"
 								data-name="Taste Eat"
 								data-description="A online food ordering website."
-								data-image="https://taste-eat.free.nf/assets/img/logo3.png"
+								data-image="https://taste-eat.free.nf/assets/img/favicon2.png"
 								data-prefill.name="<?php echo $row['user_name']; ?>"
 								data-prefill.email="<?php echo $row['email']; ?>"
-								data-theme.color="#374b56"
+								data-theme.color="#f28123"
 							></script>
 							<script>
 							</script>
@@ -199,3 +199,5 @@ $KEY_API_945549 = "rzp_test_HmDhHu8TzV8rRd";
 <!-- end check out section -->
 
 <?php include './include/footer.php' ?>
+
+<!-- substr(md5(uniqid(mt_rand(), true)), 0, 40); -->

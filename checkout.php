@@ -101,7 +101,7 @@ $KEY_API_945549 = "rzp_test_k364nkzcSun9MI";
 
 											?>
 											<div class="embed-responsive embed-responsive-21by9">
-												<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3692.993955071081!2d<?php echo $longitude; ?>!3d<?php echo $latitude; ?>!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959b4a660019ee9%3A0x3d6254f36ed0e794!2sRK%20University%20Main%20Campus!5e0!3m2!1sen!2sin!4v1708536177452!5m2!1sen!2sin" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" class="embed-responsive-item"></iframe>
+												<iframe src="https://maps.google.com/maps?q=<?php echo $latitude; ?>,<?php echo $longitude; ?>&hl=en&z=14&amp;output=embed" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen class="embed-responsive-item"></iframe>
 											</div>
 										</div>
 									</div>
@@ -163,35 +163,110 @@ $KEY_API_945549 = "rzp_test_k364nkzcSun9MI";
 									<td>
 										<?php
 										$total_amount = ($row['price'] + 50);
-										 echo $total_amount; 
-										 ?>
-								</td>
+										echo $total_amount;
+										?>
+									</td>
 								</tr>
 							</tbody>
 						</table>
-						<form class="m-3" action="" method="POST">
-							<script
-								src="assets/js/checkout.js"
-								data-key="<?php echo $KEY_API_945549; ?>"
-								data-amount="<?php echo intval($total_amount*10000);?>"
-								data-currency="INR"
-								data-order_id="order_CgmcjRh9ti2lP7"
-								data-buttontext="Pay Now"
-								data-name="Taste Eat"
-								data-description="A online food ordering website."
-								data-image="https://taste-eat.free.nf/assets/img/favicon2.png"
-								data-prefill.name="<?php echo $row['user_name']; ?>"
-								data-prefill.email="<?php echo $row['email']; ?>"
-								data-theme.color="#f28123"
-							></script>
-							<script>
-							</script>
-							<input type="hidden" custom="Hidden Element" name="hidden"/>
-						</form>
+						<button id="PayNow" class="m-2 btn btn-success btn-lg">Pay Now</button>
 					</div>
 				</div>
 			</div>
 		</div>
+		<script>
+			//Pay Amount
+			jQuery(document).ready(function($) {
+
+				jQuery('#PayNow').click(function(e) {
+
+					var id = '<?php echo $row['order_id']; ?>';
+					let billing_name = '<?php echo $row['user_name']; ?>';
+					let billing_email = '<?php echo $row['email']; ?>';
+					var shipping_name = '<?php echo $row['user_name']; ?>';
+					var shipping_email = '<?php echo $row['email']; ?>';
+					var paymentOption = "netbanking";
+					var payAmount = '<?php echo $total_amount; ?>';
+
+					var request_url = "submitpayment.php";
+					var formData = {
+						billing_name: billing_name,
+						billing_email: billing_email,
+						shipping_name: shipping_name,
+						shipping_email: shipping_email,
+						paymentOption: paymentOption,
+						payAmount: payAmount,
+						action: 'payOrder'
+					}
+
+					$.ajax({
+						type: 'POST',
+						url: request_url,
+						data: formData,
+						dataType: 'json',
+						encode: true,
+					}).done(function(data) {
+
+						if (data.res == 'success') {
+							var orderID = data.order_number;
+							var orderNumber = data.order_number;
+							var options = {
+								"key": data.razorpay_key,
+								"amount": data.userData.amount,
+								"currency": "INR",
+								"name": "Taste Eat",
+								"description": data.userData.description,
+								"image": "",
+								"order_id": data.userData.rpay_order_id,
+								"handler": function(response) {
+
+									window.location.replace("http://localhost/main/payment-success.php?id=" + id);
+
+								},
+								"prefill": {
+									"name": data.userData.name,
+									"email": data.userData.email,
+								},
+								"notes": {
+									"address": "Taste Eat Website"
+								},
+								"config": {
+									"display": {
+										"blocks": {
+											"banks": {
+												"name": 'Pay using ' + paymentOption,
+												"instruments": [
+
+													{
+														"method": paymentOption
+													},
+												],
+											},
+										},
+										"sequence": ['block.banks'],
+										"preferences": {
+											"show_default_blocks": true,
+										},
+									},
+								},
+								"theme": {
+									"color": "#f28123"
+								}
+							};
+							var rzp1 = new Razorpay(options);
+							rzp1.on('payment.failed', function(response) {
+
+								window.location.replace("http://localhost/main/payment-failed.php?id=" + id);
+
+							});
+							rzp1.open();
+							e.preventDefault();
+						}
+
+					});
+				});
+			});
+		</script>
 	<?php
 	}
 	?>

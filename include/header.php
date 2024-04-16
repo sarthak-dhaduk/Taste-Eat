@@ -37,6 +37,9 @@ session_start();
     <!-- responsive -->
     <link rel="stylesheet" href="assets/css/responsive.css">
 
+    <!-- razopay checkout js -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 
 <body>
@@ -81,24 +84,12 @@ session_start();
                                     <?php
                                     if ((isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) || (isset($_SESSION['ue']) && isset($_SESSION['pe']) && isset($_SESSION['user']))) {
                                     ?>
-                                        <div class="header-icons">
+                                        <div class="header-icons mt-3">
                                             <form method="post">
-                                                <button class="mobile-hide search-bar-icon button-like-link" style="background:transparent; border:0; color:#fff;" name="profile"><i class="fas fa-user"></i></button>
-                                                <?php
-                                                if (isset($_POST['profile'])) {
-
-                                                    if ($_SESSION['use'] == "admin") {
-                                                        header("location:index2.php");
-                                                    } elseif ($_SESSION['use'] == "user") {
-                                                        header("location:index3.php");
-                                                    } else {
-                                                        header("location:index.php");
-                                                    }
-                                                }
-                                                ?>
-                                                <a>
-                                                    <button class="button-like-link" name="btn" onclick="handleLogoutClick()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                                                </a>
+                                                <div>
+                                                    <button class="mobile-hide search-bar-icon button-like-link ml-2 float-left" style="background:transparent; border:0; color:#fff;" name="profile"><i class="fas fa-user"></i></button>
+                                                    <button class="button-like-link ml-3 float-left" name="btn" onclick="handleLogoutClick()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                                    </div>
                                                 <style>
                                                     .button-like-link {
                                                         display: inline-block;
@@ -116,6 +107,18 @@ session_start();
                                                 </style>
                                                 <!-- <button name="btn">Logout</a> -->
                                             </form>
+                                            <?php
+                                                if (isset($_POST['profile'])) {
+
+                                                    if ($_SESSION['use'] == "admin") {
+                                                        header("location:index2.php");
+                                                    } elseif ($_SESSION['use'] == "user") {
+                                                        header("location:index3.php");
+                                                    } else {
+                                                        header("location:index.php");
+                                                    }
+                                                }
+                                                ?>
                                         </div>
                                         <?php
                                         if (isset($_POST['btn'])) {
@@ -145,7 +148,6 @@ session_start();
                                 </li>
                             </ul>
                         </nav>
-                        <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                         <div class="mobile-menu"></div>
                         <!-- menu end -->
                     </div>

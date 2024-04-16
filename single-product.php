@@ -334,6 +334,7 @@ if (mysqli_num_rows($qr2) == 1) {
 											$result1 = mysqli_query($con, $review);
 
 											if ($result1) {
+												header("location:index3.php");
 											}
 										}
 									}
@@ -439,6 +440,7 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
 						$issue_q_r = mysqli_query($con, $issue_q);
 
 						if ($issue_q_r) {
+							header("location:index3.php");
 						}
 					}
 				}

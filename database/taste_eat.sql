@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 10, 2024 at 03:20 PM
+-- Generation Time: Apr 15, 2024 at 03:43 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -157,15 +157,9 @@ CREATE TABLE `order` (
   `price` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `address` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `time` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `time` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `payment_status` varchar(250) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `order`
---
-
-INSERT INTO `order` (`order_id`, `user_name`, `email`, `item_name`, `quantity`, `price`, `address`, `date`, `time`) VALUES
-('65f32c4f8887a', 'Sarthak', 'sdhaduk666@rku.ac.in', 'Burrito', '3', '126', 'https://www.google.com/maps/place/22.2431612,70.902205', '2024-03-14', '17:06:47');
 
 -- --------------------------------------------------------
 
@@ -188,7 +182,7 @@ CREATE TABLE `register` (
 
 INSERT INTO `register` (`username`, `email`, `password`, `user`, `profilepic`, `token`) VALUES
 ('Jigar', 'jkalariya487@rku.ac.in', '1234567@Jj', 'user', '65ef71a91b481JP.jpg', '65e9dc0eee7b5'),
-('Admin', 'admin@gmail.com', '123456#Admin', 'admin', '65ef601ccaa58Picsart_22-12-05_19-16-54-887 - Copy.jpg', '65e9dcfe4311c');
+('Sarthak', 'sdhaduk666@rku.ac.in', '123456@Sd', 'admin', '65ef601ccaa58Picsart_22-12-05_19-16-54-887 - Copy.jpg', '65e9dcfe4311c');
 
 -- --------------------------------------------------------
 

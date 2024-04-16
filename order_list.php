@@ -14,6 +14,7 @@
               <th>Item Name</th>
               <th>Quantity</th>
               <th>Price</th>
+              <th>Payment Status</th>
               <th>Address</th>
               <th>Date</th>
               <th>Time</th>
@@ -37,6 +38,19 @@
                   </td>
                   <td><?php echo $roww['quantity']; ?></td>
                   <td><?php echo $roww['price']; ?></td>
+                  <td>
+                    <?php
+                    if ($roww['payment_status'] == "Done") {
+                    ?>
+                      <span class="badge bg-label-success me-1"><?php echo $roww['payment_status']; ?></span>
+                    <?php
+                    } else {
+                    ?>
+                      <a href="checkout.php?id=<?php echo $roww['order_id']; ?>" class="badge bg-label-danger me-1"><?php echo $roww['payment_status']; ?></a>
+                    <?php
+                    }
+                    ?>
+                  </td>
                   <td>
                     <a href="<?php echo $roww['address']; ?>" target="_blank" class="btn btn-icon btn-primary" fdprocessedid="o3ich">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin">
@@ -110,6 +124,36 @@
                                       <input type="number" id="nameWithTitle" class="form-control" value="<?php echo $roww['price']; ?>" name="edit_price<?php echo $roww['order_id']; ?>" />
                                     </div>
                                   </div>
+                                  <div class="row">
+                                    <div class="col mb-3">
+                                      <label for="nameWithTitle" class="form-label">Payment Status</label>
+                                      <?php
+                                      if ($roww['payment_status'] == "Panding") {
+                                      ?>
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="pay_status<?php echo $roww['order_id']; ?>" value="Done">
+                                          <label class="form-check-label" for="defaultRadio1"> Done </label>
+                                        </div>
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="pay_status<?php echo $roww['order_id']; ?>" value="Panding" checked="">
+                                          <label class="form-check-label" for="defaultRadio2"> Panding </label>
+                                        </div>
+                                      <?php
+                                      } else {
+                                      ?>
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="pay_status<?php echo $roww['order_id']; ?>" value="Done" checked="">
+                                          <label class="form-check-label" for="defaultRadio1"> Done </label>
+                                        </div>
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="pay_status<?php echo $roww['order_id']; ?>" value="Panding">
+                                          <label class="form-check-label" for="defaultRadio2"> Panding </label>
+                                        </div>
+                                      <?php
+                                      }
+                                      ?>
+                                    </div>
+                                  </div>
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -126,12 +170,13 @@
                                 $edit_item_name = @$_POST['edit_item_name' . $up_order_id];
                                 $edit_quantity = @$_POST['edit_quantity' . $up_order_id];
                                 $edit_price =  @$_POST['edit_price' . $up_order_id];
+                                $pay_status =  @$_POST['pay_status' . $up_order_id];
                                 $edit_address =  @$_POST['edit_address' . $up_order_id];
                                 $edit_item_date = @$_POST['edit_item_date' . $up_order_id];
                                 $edit_item_time = @$_POST['edit_item_time' . $up_order_id];
 
 
-                                $q_edit_item = "UPDATE `order` SET `item_name` = '$edit_item_name', `user_name` = '$edit_user_name', `email` = '$edit_email', `quantity` = '$edit_quantity', `price` = '$edit_price', `address` = '$edit_address', `date` = '$edit_item_date', `time` = '$edit_item_time' WHERE `order_id`='$up_order_id'";
+                                $q_edit_item = "UPDATE `order` SET `item_name` = '$edit_item_name', `user_name` = '$edit_user_name', `email` = '$edit_email', `quantity` = '$edit_quantity', `price` = '$edit_price', `address` = '$edit_address', `date` = '$edit_item_date', `time` = '$edit_item_time', `payment_status` = '$pay_status' WHERE `order_id`='$up_order_id'";
 
                                 $result_edit = mysqli_query($con, $q_edit_item);
 

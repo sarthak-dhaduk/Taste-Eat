@@ -79,6 +79,7 @@
 							$contact_q_r = mysqli_query($con, $contact_q);
 
 							if ($contact_q_r) {
+								header("location:index3.php");
 							}
 						}
 					}
@@ -119,7 +120,7 @@
 <!-- end find our location -->
 
 <!-- google map section -->
-<div class="embed-responsive embed-responsive-21by9">
+<div class="embed-responsive embed-responsive-21by9">,
 	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3692.993955071081!2d70.89827967474777!3d22.240308145068305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959b4a660019ee9%3A0x3d6254f36ed0e794!2sRK%20University%20Main%20Campus!5e0!3m2!1sen!2sin!4v1708536177452!5m2!1sen!2sin" width="600" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" class="embed-responsive-item"></iframe>
 	<!-- https://www.google.com/maps/dir/22.2432133,70.9023246/19.07283,72.88261/ -->
 	<!-- https://www.google.com/maps/place/22.2363648,70.8968448 -->

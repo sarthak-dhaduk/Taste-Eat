@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 10, 2024 at 03:20 PM
+-- Generation Time: Apr 16, 2024 at 07:29 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -157,15 +157,9 @@ CREATE TABLE `order` (
   `price` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `address` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `time` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `time` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `payment_status` varchar(250) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `order`
---
-
-INSERT INTO `order` (`order_id`, `user_name`, `email`, `item_name`, `quantity`, `price`, `address`, `date`, `time`) VALUES
-('65f32c4f8887a', 'Sarthak', 'sdhaduk666@rku.ac.in', 'Burrito', '3', '126', 'https://www.google.com/maps/place/22.2431612,70.902205', '2024-03-14', '17:06:47');
 
 -- --------------------------------------------------------
 
@@ -187,8 +181,7 @@ CREATE TABLE `register` (
 --
 
 INSERT INTO `register` (`username`, `email`, `password`, `user`, `profilepic`, `token`) VALUES
-('Jigar', 'jkalariya487@rku.ac.in', '1234567@Jj', 'user', '65ef71a91b481JP.jpg', '65e9dc0eee7b5'),
-('Admin', 'admin@gmail.com', '123456#Admin', 'admin', '65ef601ccaa58Picsart_22-12-05_19-16-54-887 - Copy.jpg', '65e9dcfe4311c');
+('Sarthak', 'sdhaduk666@rku.ac.in', '123456@Sd', 'admin', '661ece502eaa9Picsart_22-12-05_19-16-54-887 - Copy.jpg', '661ece502eaaa');
 
 -- --------------------------------------------------------
 
@@ -240,6 +233,24 @@ INSERT INTO `review` (`review_id`, `user_name`, `email`, `item_name`, `rating`, 
 ('65ec3a894ae41', 'Sarthak', 'sdhaduk666@rku.ac.in', 'Sfogliatelle (Naples, Italy)', '5', 'Our platform offers an intuitive interface, making ordering a breeze, while our extensive selection of restaurants ensures there\'s something to satisfy every craving. We\'re committed to delivering top-notch customer service, ensuring your meal arrives promptly and deliciously every time. Join the thousands who trust \' Taste Eat \' for a seamless dining experience.'),
 ('65ec3a90f26e0', 'Sarthak', 'sdhaduk666@rku.ac.in', 'Baklava (Middle East)', '5', 'Our platform offers an intuitive interface, making ordering a breeze, while our extensive selection of restaurants ensures there\'s something to satisfy every craving. We\'re committed to delivering top-notch customer service, ensuring your meal arrives promptly and deliciously every time. Join the thousands who trust \' Taste Eat \' for a seamless dining experience.'),
 ('65ed7fad47377', 'Sarthak', 'sdhaduk666@rku.ac.in', 'Burrito', '5', 'Our platform offers an intuitive interface, making ordering a breeze, while our extensive selection of restaurants ensures there\'s something to satisfy every craving. We\'re committed to delivering top-notch customer service, ensuring your meal arrives promptly and deliciously every time. Join the thousands who trust \' Taste Eat \' for a seamless dining experience.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `temporary_register`
+--
+
+CREATE TABLE `temporary_register` (
+  `temp_user_id` varchar(250) NOT NULL,
+  `temp_username` varchar(250) NOT NULL,
+  `temp_email` varchar(250) NOT NULL,
+  `temp_password` varchar(250) NOT NULL,
+  `temp_pic` varchar(250) NOT NULL,
+  `temp_token` varchar(250) NOT NULL,
+  `temp_user` varchar(250) NOT NULL,
+  `exp_time` varchar(250) NOT NULL,
+  `exp_date` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
@@ -307,6 +318,12 @@ ALTER TABLE `review`
   ADD KEY `Username_relation` (`user_name`),
   ADD KEY `Email_relation` (`email`),
   ADD KEY `Food_Items_relation` (`item_name`);
+
+--
+-- Indexes for table `temporary_register`
+--
+ALTER TABLE `temporary_register`
+  ADD PRIMARY KEY (`temp_user_id`);
 
 --
 -- Constraints for dumped tables

@@ -90,7 +90,7 @@ if (!isset($_SESSION['u']) && !isset($_SESSION['p']) && !isset($_SESSION['use'])
       <div class="layout-page p-0">
         <!-- Navbar -->
         <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
-          
+
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <ul class="navbar-nav flex-row align-items-center ms-auto">
               <!-- User -->
@@ -104,16 +104,22 @@ if (!isset($_SESSION['u']) && !isset($_SESSION['p']) && !isset($_SESSION['use'])
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar">
-                      <img src="uploaded_image/<?php echo $register_row['profilepic'] ?>" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="<?php $pic = $register_row['profilepic'];
+                                $word = "https";
+                                $avatarUrl = (strpos($pic, $word) === false) ? "uploaded_image/" . $pic : $pic;
+                                echo $avatarUrl; ?>" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                      <a class="dropdown-item" href="index3.php">
+                      <a class="dropdown-item" href="index.php">
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar ">
-                              <img src="uploaded_image/<?php echo $register_row['profilepic'] ?>" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="<?php $pic = $register_row['profilepic'];
+                                        $word = "https";
+                                        $avatarUrl = (strpos($pic, $word) === false) ? "uploaded_image/" . $pic : $pic;
+                                        echo $avatarUrl; ?>" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -144,10 +150,7 @@ if (!isset($_SESSION['u']) && !isset($_SESSION['p']) && !isset($_SESSION['use'])
                       </form>
                       <?php
                       if (isset($_POST['btn'])) {
-                        unset($_SESSION['u']);
-                        unset($_SESSION['e']);
-                        unset($_SESSION['p']);
-                        unset($_SESSION['use']);
+                        session_destroy();
                         header("location:index.php");
                       }
                       ?>

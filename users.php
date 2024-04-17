@@ -36,7 +36,10 @@
                   <td>
                     <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                       <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="<?php echo $roww['username']; ?>">
-                        <img src="uploaded_image/<?php echo $roww['profilepic']; ?>" alt="Avatar" class="rounded-circle" />
+                        <img src="<?php $pic = $roww['profilepic'];
+                                $word = "https";
+                                $avatarUrl = (strpos($pic, $word) === false) ? "uploaded_image/" . $pic : $pic;
+                                echo $avatarUrl; ?>" alt="Avatar" class="rounded-circle" />
                       </li>
                     </ul>
                   </td>

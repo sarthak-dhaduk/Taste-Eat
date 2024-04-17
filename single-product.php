@@ -363,7 +363,10 @@ if (mysqli_num_rows($qr2) == 1) {
 								if (mysqli_num_rows($q_us_r) > 0) {
 									while ($row_profile = mysqli_fetch_assoc($q_us_r)) {
 								?>
-										<img src="uploaded_image/<?php echo $row_profile['profilepic']; ?>" class="mr-3 rounded-circle" alt="User Image" style="width: 50px; height: 50px;">
+										<img src="<?php $pic = $row_profile['profilepic'];
+													$word = "https";
+													$avatarUrl = (strpos($pic, $word) === false) ? "uploaded_image/" . $pic : $pic;
+													echo $avatarUrl; ?>" class="mr-3 rounded-circle" alt="User Image" style="width: 50px; height: 50px;">
 								<?php
 									}
 								}

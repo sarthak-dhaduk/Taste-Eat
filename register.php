@@ -1,7 +1,7 @@
 <?php
 ob_start();
-session_start();
-if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
+include_once 'config.php';
+if (isset($_SESSION['u']) && isset($_SESSION['p'])) {
     header("location:index.php");
 }
 ?>
@@ -117,12 +117,7 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
                                         </div>
                                         <?php
                                         if (isset($_POST['btn'])) {
-                                            unset($_SESSION['u']);
-                                            unset($_SESSION['p']);
-                                            unset($_SESSION['use']);
-                                            unset($_SESSION['ue']);
-                                            unset($_SESSION['pe']);
-                                            unset($_SESSION['user']);
+                                            session_destroy();
                                             header("location:index.php");
                                         ?>
                                             <div class="header-icons">
@@ -160,6 +155,46 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
         <div class="container">
             <div class="row" style="margin-top: -6rem;">
                 <div class="col-lg-8">
+                    <?php
+                    $login_button = '';
+
+
+                    if (isset($_GET["code"])) {
+
+                        $token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
+
+
+                        if (!isset($token['error'])) {
+
+                            $google_client->setAccessToken($token['access_token']);
+
+
+                            // $_SESSION['access_token'] = $token['access_token'];
+
+
+                            $google_service = new Google\Service\Oauth2($google_client);
+
+
+                            $data = $google_service->userinfo->get();
+
+
+                            if (((!empty($data['given_name'])) || (!empty($data['family_name']))) && (!empty($data['email'])) && (!empty($data['picture']))) {
+                                $first_name = $data['given_name'];
+                                $last_name = $data['family_name'];
+                                $email_id = $data['email'];
+                                $picture = $data['picture'];
+
+                                header("location:password.php?first=$first_name&last=$last_name&email=$email_id&picture=$picture");
+                            }
+                        }
+                    }
+
+
+                    if (!isset($_SESSION['access_token'])) {
+
+                        $login_button = '<a class="cart-btn" style="width: 300px;" href="' . $google_client->createAuthUrl() . '"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 488 512"><path fill="#ffff" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg></a>';
+                    }
+                    ?>
                     <h2 class="pb-3">Register <span class="orange-text">Now</span></h2>
                     <div id="form_status"></div>
                     <div class="contact-form">
@@ -177,10 +212,47 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
                             </div>
                             <span id="file-error" class="error-message"></span>
                             </p>
+
+                            <style>
+                                .hr {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    flex-direction: row;
+                                    width: 49%;
+                                }
+
+                                .text {
+                                    padding: 0 10px;
+                                    color: #F28123;
+                                }
+
+                                .line {
+                                    width: 100%;
+                                    border-bottom: 1px solid #F28123;
+                                    margin: 0 10px;
+                                }
+                            </style>
+                            <div class="hr my-3">
+                                <div class="line"></div>
+                                <span class="text">OR</span>
+                                <div class="line"></div>
+                            </div>
+
+                            <div class="signup-other my-3">
+                                <div class="upload-container">
+                                    <div class="upload-btn-wrapper">
+                                        <?php echo '<div align="center">' . $login_button . '</div>'; ?>
+                                    </div>
+                                </div>
+                            </div>
+
                             <p><img id="file-preview" alt="File Preview" class="rounded-lg" style="max-width: 100px; max-height: 100px;" /></p>
                             <p>Already Have an Account? <a href="login.php">Login</a></p>
                             <p><input type="submit" value="Register" name="btn"></p>
                         </form>
+
+
 
                         <script src="/assets/js/jquery-1.11.3.min.js"></script>
                         <script>
@@ -265,7 +337,6 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
                                 return true;
                             }
                         </script>
-
                     </div>
                 </div>
             </div>
@@ -276,6 +347,7 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
     <?php include './include/footer.php' ?>
     <?php
     if (isset($_POST['btn'])) {
+        $id = uniqid();
         $ue = $_POST['uname'];
         $ee = $_POST['email'];
         $pe = $_POST['pwd'];
@@ -283,6 +355,9 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
         $user = "user";
         $fi = uniqid() . $_FILES['myfile']['name'];
         $token = uniqid();
+        $addon_time = " +" . "30" . " minutes";
+        $exp_time = date("H:i:s", strtotime(date("H:i:s") . $addon_time));
+        $exp_date = date("Y-m-d");
 
         $check_email = "SELECT * FROM register WHERE email = '$ee'";
         $check_user = "SELECT * FROM register WHERE username = '$ue'";
@@ -313,19 +388,58 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
 
                 move_uploaded_file($_FILES['myfile']['tmp_name'], "uploaded_image/" . $fi);
 
-                $q1 = "INSERT INTO register (username, email, password, user, profilepic, token)  
-					VALUES ('$ue', '$ee', '$pe', '$user', '$fi', '$token')";
+                $q1 = "INSERT INTO `temporary_register`(`temp_user_id`, `temp_username`, `temp_email`, `temp_password`, `temp_pic`, `temp_token`, `temp_user`, `exp_time`, `exp_date`) 
+                VALUES ('$id','$ue', '$ee', '$pe', '$fi', '$token', '$user', '$exp_time', '$exp_date')";
 
 
                 if (mysqli_query($con, $q1)) {
 
-                    $_SESSION['u'] = $ue;
-                    $_SESSION['e'] = $ee;
-                    $_SESSION['p'] = $pe;
-                    $_SESSION['use'] = $user;
-                    if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
-                        header("location:index.php");
+                    if ($ee != "") {
+                        $tomail = $ee;
+
+                        $q_user = "SELECT * FROM `register`  WHERE `email`='$tomail'";
+                        $q_user_r = mysqli_query($con, $q_user);
+                        if (mysqli_num_rows($q_user_r) != 1) {
+
+                            $username = $ue;
+
+                            require 'Mail/phpmailer/PHPMailerAutoload.php';
+
+                            $mail = new PHPMailer;
+
+                            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                            $mail->isSMTP();
+                            $mail->Host = 'smtp.gmail.com';
+                            $mail->Port = 587;
+                            $mail->SMTPAuth = true;
+                            $mail->SMTPSecure = 'tls';
+
+                            $mail->Username = 'sdhaduk666@rku.ac.in';
+                            $mail->Password = '********';
+
+                            $mail->setFrom('sdhaduk666@rku.ac.in', 'Taste Eat');
+                            $mail->addAddress($tomail);
+
+                            $mail->isHTML(true);
+                            $mail->Subject = "Urgent : Activate Your Account";
+                            $mail->Body = "
+                                <section style='margin:10px'>
+                                    <h1 style='font-size: 30px;'>Hello,<small style='font-size: 20px;'> $username</small></h1>
+                                    <p style='font-size: 18px;'>We are sending you this mail to activate your account in our website Taste Eat.</p>
+                                    <small style='color: red;'>The activation link will expire after  <b><u> 30 Minutes. </u></b></small><br><br>
+                                    
+                                    <a href='http://localhost/main/activation.php?id=$id' style='background-color: #f18023; padding: 9px; text-decoration: none; color: #ffff; border-radius: 5px;'>Activate</a>
+                                </section>
+                        ";
+
+                            if (!$mail->send()) {
+                                echo 'error Email sending failed';
+                            } else {
+                                header("location:login.php");
+                            }
+                        }
                     }
+
                 }
             } else {
                 echo " Password Is Not Match";

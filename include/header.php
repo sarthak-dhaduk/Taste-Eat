@@ -71,25 +71,18 @@ session_start();
                             <ul>
                                 <li><a href="index.php">Home</a></li>
                                 <li><a href="about.php">About</a></li>
-                                <!-- <li><a href="#">Pages</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="404.php">404 page</a></li>
-                                        <li><a href="checkout.php">Check Out</a></li>
-                                        
-                                    </ul>
-                                </li> -->
                                 <li><a href="contact.php">Contact</a></li>
                                 <li><a href="shop.php">Menu</a></li>
                                 <li>
                                     <?php
-                                    if ((isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) || (isset($_SESSION['ue']) && isset($_SESSION['pe']) && isset($_SESSION['user']))) {
+                                    if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
                                     ?>
                                         <div class="header-icons mt-3">
                                             <form method="post">
                                                 <div>
                                                     <button class="mobile-hide search-bar-icon button-like-link ml-2 float-left" style="background:transparent; border:0; color:#fff;" name="profile"><i class="fas fa-user"></i></button>
                                                     <button class="button-like-link ml-3 float-left" name="btn" onclick="handleLogoutClick()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                                    </div>
+                                                </div>
                                                 <style>
                                                     .button-like-link {
                                                         display: inline-block;
@@ -108,27 +101,21 @@ session_start();
                                                 <!-- <button name="btn">Logout</a> -->
                                             </form>
                                             <?php
-                                                if (isset($_POST['profile'])) {
+                                            if (isset($_POST['profile'])) {
 
-                                                    if ($_SESSION['use'] == "admin") {
-                                                        header("location:index2.php");
-                                                    } elseif ($_SESSION['use'] == "user") {
-                                                        header("location:index3.php");
-                                                    } else {
-                                                        header("location:index.php");
-                                                    }
+                                                if ($_SESSION['use'] == "admin") {
+                                                    header("location:index2.php");
+                                                } elseif ($_SESSION['use'] == "user") {
+                                                    header("location:index3.php");
+                                                } else {
+                                                    header("location:index.php");
                                                 }
-                                                ?>
+                                            }
+                                            ?>
                                         </div>
                                         <?php
                                         if (isset($_POST['btn'])) {
-                                            unset($_SESSION['u']);
-                                            unset($_SESSION['p']);
-                                            unset($_SESSION['use']);
-                                            unset($_SESSION['e']);
-                                            unset($_SESSION['ue']);
-                                            unset($_SESSION['pe']);
-                                            unset($_SESSION['user']);
+                                            session_destroy();
                                             header("location:index.php");
                                         ?>
                                             <div class="header-icons">

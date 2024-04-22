@@ -20,49 +20,19 @@
             <h5 class="card-header">Profile Details</h5>
             <!-- Account -->
 
-            <form enctype="multipart/form-data" method="post">
+            <form enctype="multipart/form-data" method="post" id="editForm">
               <div class="card-body">
                 <div class="d-flex align-items-start align-items-sm-center gap-4">
                   <img src="<?php $pic = $register_row['profilepic'];
-                                $word = "https";
-                                $avatarUrl = (strpos($pic, $word) === false) ? "uploaded_image/" . $pic : $pic;
-                                echo $avatarUrl; ?>" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
+                            $word = "https";
+                            $avatarUrl = (strpos($pic, $word) === false) ? "uploaded_image/" . $pic : $pic;
+                            echo $avatarUrl; ?>" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
                   <div class="button-wrapper">
                     <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                       <span class="d-none d-sm-block">Upload new photo</span>
                       <i class="bx bx-upload d-block d-sm-none"></i>
                       <input type="file" name="edit_profilepic" id="upload" class="account-file-input" hidden onchange="previewFile()" accept="image/png, image/jpeg" />
                     </label>
-                    <script>
-                      $(document).ready(function() {
-                        $('#upload').change(function() {
-                          previewFile();
-                        });
-
-                        $('#myForm').submit(function(event) {
-                          if (!valid_datas(this)) {
-                            event.preventDefault();
-                          }
-                        });
-                      });
-
-                      function previewFile() {
-                        var preview = $('#uploadedAvatar');
-                        var fileInput = $('#upload')[0].files[0];
-                        var reader = new FileReader();
-
-                        reader.onloadend = function() {
-                          preview.attr('src', reader.result);
-                          preview.css('display', 'block');
-                        };
-
-                        if (fileInput) {
-                          reader.readAsDataURL(fileInput);
-                        } else {
-                          preview.attr('src', '');
-                        }
-                      }
-                    </script>
                     <button type="button" class="btn btn-outline-secondary account-image-reset mb-4 refresh-button">
                       <i class="bx bx-reset d-block d-sm-none"></i>
                       <span class="d-none d-sm-block">Reset</span>
@@ -83,23 +53,26 @@
               </div>
               <hr class="my-0" />
               <div class="card-body">
-
                 <div class="row">
                   <div class="mb-3 col-md-6">
-                    <label for="firstName" class="form-label">User Name</label>
+                    <label for="username" class="form-label">User Name</label>
                     <input class="form-control" type="text" id="username" name="edit_username" value="<?php echo $register_row['username'] ?>" autofocus />
+                    <div class="invalid-feedback"></div>
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="email" class="form-label">E-mail</label>
                     <input class="form-control" type="email" id="email" name="edit_email" value="<?php echo $register_row['email'] ?>" />
+                    <div class="invalid-feedback"></div>
                   </div>
                   <div class="mb-3 col-md-6">
-                    <label for="organization" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="organization" name="edit_pwd" value="<?php echo $register_row['password'] ?>" />
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="edit_pwd" value="<?php echo $register_row['password'] ?>" />
+                    <div class="invalid-feedback"></div>
                   </div>
                   <div class="mb-3 col-md-6">
-                    <label for="organization" class="form-label">Conform Password</label>
-                    <input type="text" class="form-control" id="organization" name="edit_cpwd" value="<?php echo $register_row['password'] ?>" />
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="edit_cpwd" value="<?php echo $register_row['password'] ?>" />
+                    <div class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="mt-2">
@@ -152,5 +125,68 @@
     ?>
   </div>
   <!-- / Content -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <?php include './admin_include/footer.php' ?>
+  <script>
+    $(document).ready(function() {
+      $('#editForm').submit(function(event) {
+        var isValid = true;
+        // Reset validation
+        $('#editForm :input').removeClass('is-invalid');
+        $('#editForm .invalid-feedback').text('');
+
+        // Validate username
+        var username = $('#username').val();
+        if (!username) {
+          $('#username').addClass('is-invalid');
+          $('#username').next('.invalid-feedback').text('Username is required.');
+          isValid = false;
+        }
+
+        // Validate email
+        var email = $('#email').val();
+        if (!email) {
+          $('#email').addClass('is-invalid');
+          $('#email').next('.invalid-feedback').text('Email is required.');
+          isValid = false;
+        }
+
+        // Validate password
+        var password = $('#password').val();
+        if (!password) {
+          $('#password').addClass('is-invalid');
+          $('#password').next('.invalid-feedback').text('Password is required.');
+          isValid = false;
+        }
+
+        // Validate confirm password
+        var confirmPassword = $('#confirmPassword').val();
+        if (!confirmPassword) {
+          $('#confirmPassword').addClass('is-invalid');
+          $('#confirmPassword').next('.invalid-feedback').text('Confirm Password is required.');
+          isValid = false;
+        }
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+          $('#password').addClass('is-invalid');
+          $('#confirmPassword').addClass('is-invalid');
+          $('#confirmPassword').next('.invalid-feedback').text('Passwords do not match.');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          event.preventDefault();
+        }
+
+        return isValid;
+      });
+
+      // Reset form and uploaded image
+      $('.refresh-button').click(function() {
+        $('#editForm').trigger('reset');
+        $('#uploadedAvatar').attr('src', '<?php echo $avatarUrl; ?>');
+      });
+    });
+  </script>
+<?php include './admin_include/footer.php' ?>

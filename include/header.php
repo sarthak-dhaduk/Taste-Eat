@@ -74,9 +74,7 @@ session_start();
                                 <li><a href="contact.php">Contact</a></li>
                                 <li><a href="shop.php">Menu</a></li>
                                 <li>
-                                    <?php
-                                    if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
-                                    ?>
+                                    <?php if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) { ?>
                                         <div class="header-icons mt-3">
                                             <form method="post">
                                                 <div>
@@ -102,7 +100,6 @@ session_start();
                                             </form>
                                             <?php
                                             if (isset($_POST['profile'])) {
-
                                                 if ($_SESSION['use'] == "admin") {
                                                     header("location:index2.php");
                                                 } elseif ($_SESSION['use'] == "user") {
@@ -116,6 +113,7 @@ session_start();
                                         <?php
                                         if (isset($_POST['btn'])) {
                                             session_destroy();
+                                            $_SESSION['logout_success'] = true;
                                             header("location:index.php");
                                         ?>
                                             <div class="header-icons">

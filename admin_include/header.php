@@ -41,6 +41,9 @@ if (!isset($_SESSION['u']) && !isset($_SESSION['p']) && !isset($_SESSION['use'])
   <link rel="stylesheet" href="./admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
   <link rel="stylesheet" href="./admin/assets/vendor/libs/apex-charts/apex-charts.css" />
 
+  <!-- Include SweetAlert library -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  
   <!-- Page CSS -->
 
   <!-- Helpers -->

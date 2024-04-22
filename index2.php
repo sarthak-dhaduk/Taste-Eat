@@ -1,4 +1,43 @@
 <?php include './admin_include/header.php' ?>
+<?php
+if (!isset($_SESSION['u'])) {
+    header("location:login.php");
+    exit();
+}
+
+if (!isset($_SESSION['alert_shown'])) {
+    ?>
+    <div class="container mt-5">
+        <h1>Welcome, <?php echo $_SESSION['u']; ?></h1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.4.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var toast = new bootstrap.Toast(document.getElementById('successToast'));
+            toast.show();
+        });
+    </script>
+
+    <div class="toast align-items-center text-white bg-success border-0 position-fixed bottom-0 end-0 p-3" id="successToast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                You have successfully logged in!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <?php
+
+    $_SESSION['alert_shown'] = true;
+} else {
+    ?>
+    <div class="container mt-5">
+        <h1>Welcome, <?php echo $_SESSION['u']; ?></h1>
+    </div>
+    <?php
+}
+?>
 <div class="content-wrapper">
   <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">

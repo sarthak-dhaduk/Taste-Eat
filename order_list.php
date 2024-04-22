@@ -188,9 +188,35 @@
                             </div>
                           </div>
                         </div>
-                        <a href="delete_admin.php?id=<?php echo $roww['order_id']; ?>&data=orders" class="btn btn-outline-danger">
+                        <a href="#" class="btn btn-outline-danger delete-order" data-id="<?php echo $roww['order_id']; ?>" data-type="orders">
                           <i class="tf-icons bx bxs-trash"></i>
                         </a>
+                        <script>
+                          document.addEventListener('DOMContentLoaded', function() {
+                            document.querySelectorAll('.delete-order').forEach(item => {
+                              item.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                const id = this.getAttribute('data-id');
+                                const type = this.getAttribute('data-type');
+
+                                Swal.fire({
+                                  title: "Are you sure?",
+                                  text: "You won't be able to revert this!",
+                                  icon: "warning",
+                                  showCancelButton: true,
+                                  confirmButtonColor: "#3085d6",
+                                  cancelButtonColor: "#d33",
+                                  confirmButtonText: "Yes, delete it!"
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    // User confirmed, proceed with deletion
+                                    window.location.href = `delete_admin.php?id=${id}&data=${type}`;
+                                  }
+                                });
+                              });
+                            });
+                          });
+                        </script>
                       </div>
                     </div>
                   </td>

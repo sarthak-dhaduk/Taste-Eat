@@ -4,6 +4,15 @@ session_start();
 if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
     header("location:index.php");
 }
+if (isset($_SESSION['logout_success']) && $_SESSION['logout_success'] == true) {
+    ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        You have successfully logged out.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php
+    $_SESSION['logout_success'] = false;
+}
 ?>
 <?php include_once 'connection.php' ?>
 <!DOCTYPE html>
@@ -241,22 +250,36 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
         $u = $results_of_status['username'];
         if (mysqli_num_rows($results) == 1) {
 
-                $_SESSION['u'] = $u;
-                $_SESSION['e'] = $e;
-                $_SESSION['p'] = $p;
-                $_SESSION['use'] = $use;
-                if ($use == "admin") {
-                    header("location:index2.php");
-                } else {
-                    header("location:index.php");
-                }
-        } else {
+            $_SESSION['u'] = $u;
+            $_SESSION['e'] = $e;
+            $_SESSION['p'] = $p;
+            $_SESSION['use'] = $use;
+            if ($use == "admin") {
+                header("location:index2.php");
+            } else {
+                header("location:index.php");
+            }
+
     ?>
-            <script>
-                function registration() {
-                    alert("Error");
-                }
-            </script>
+            <!-- Success Toast -->
+            <div class="toast align-items-center text-white bg-success border-0 position-fixed bottom-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        You have successfully logged in!
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        <?php
+
+        } else {
+        ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> Invalid email or password. Please check your credentials and try again.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
     <?php
         }
     }

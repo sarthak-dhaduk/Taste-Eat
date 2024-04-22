@@ -34,7 +34,10 @@
         >Upgrade to Pro</a
       >
     </div> -->
-
+    
+    <!-- Sweet alert script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
 

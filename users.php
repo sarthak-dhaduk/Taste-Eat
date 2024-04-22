@@ -37,9 +37,9 @@
                     <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                       <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="<?php echo $roww['username']; ?>">
                         <img src="<?php $pic = $roww['profilepic'];
-                                $word = "https";
-                                $avatarUrl = (strpos($pic, $word) === false) ? "uploaded_image/" . $pic : $pic;
-                                echo $avatarUrl; ?>" alt="Avatar" class="rounded-circle" />
+                                  $word = "https";
+                                  $avatarUrl = (strpos($pic, $word) === false) ? "uploaded_image/" . $pic : $pic;
+                                  echo $avatarUrl; ?>" alt="Avatar" class="rounded-circle" />
                       </li>
                     </ul>
                   </td>
@@ -138,9 +138,35 @@
                             </div>
                           </div>
                         </div>
-                        <a href="delete_admin.php?id=<?php echo $roww['username']; ?>&data=users" class="btn btn-outline-danger">
-                          <i class="tf-icons bx bxs-trash"></i>
+                        <a href="#" class="btn btn-outline-danger delete-user" data-id="<?php echo $roww['username']; ?>">
+                          <i class="tf-icons bx bxs-trash"></i> 
                         </a>
+                        <script>
+                          document.addEventListener('DOMContentLoaded', function() {
+                            document.querySelectorAll('.delete-user').forEach(function(element) {
+                              element.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                const id = this.getAttribute('data-id');
+
+                                Swal.fire({
+                                  title: 'Are you sure?',
+                                  text: "You won't be able to revert this!",
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#3085d6',
+                                  cancelButtonColor: '#d33',
+                                  confirmButtonText: 'Yes, delete it!'
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    // If confirmed, redirect to delete_admin.php with the appropriate parameters
+                                    window.location.href = `delete_admin.php?id=${id}&data=users`;
+                                  }
+                                });
+                              });
+                            });
+                          });
+                        </script>
+
                       </div>
                     </div>
                   </td>

@@ -146,9 +146,38 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="delete_admin.php?id=<?php echo $roww['contact_id']; ?>&data=contact" class="btn btn-outline-danger">
-                                                    <i class="tf-icons bx bxs-trash"></i>
+                                                <a href="#" class="btn btn-outline-danger delete-contact" data-id="<?php echo $roww['contact_id']; ?>">
+                                                    <i class="tf-icons bx bxs-trash"></i> 
                                                 </a>
+                                                <!-- Include SweetAlert library -->
+                                                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        // Select all delete-contact buttons
+                                                        const deleteButtons = document.querySelectorAll('.delete-contact');
+                                                        deleteButtons.forEach(button => {
+                                                            button.addEventListener('click', function(e) {
+                                                                e.preventDefault();
+                                                                const id = this.getAttribute('data-id');
+
+                                                                Swal.fire({
+                                                                    title: 'Are you sure?',
+                                                                    text: "You won't be able to revert this!",
+                                                                    icon: 'warning',
+                                                                    showCancelButton: true,
+                                                                    confirmButtonColor: '#3085d6',
+                                                                    cancelButtonColor: '#d33',
+                                                                    confirmButtonText: 'Yes, delete it!'
+                                                                }).then((result) => {
+                                                                    if (result.isConfirmed) {
+                                                                        // If confirmed, redirect to delete_admin.php with the appropriate parameters
+                                                                        window.location.href = `delete_admin.php?id=${id}&data=contact`;
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                     </td>

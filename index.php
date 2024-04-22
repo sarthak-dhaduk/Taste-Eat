@@ -1,5 +1,37 @@
 <?php include './include/header.php' ?>
+<?php
+if (!isset($_SESSION['u'])) {
+    header("location:login.php");
+    exit();
+}
 
+if (!isset($_SESSION['alert_shown'])) {
+    ?>
+    <div class="container mt-5">
+        <h1>Welcome, <?php echo $_SESSION['u']; ?></h1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.4.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var toast = new bootstrap.Toast(document.getElementById('successToast'));
+            toast.show();
+        });
+    </script>
+
+    <div class="toast align-items-center text-white bg-success border-0 position-fixed bottom-0 end-0 p-3" id="successToast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                You have successfully logged in!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <?php
+
+    $_SESSION['alert_shown'] = true;
+}
+?>
 <!-- hero area -->
 <div class="hero-area hero-bg">
 	<div class="container">
@@ -105,28 +137,25 @@
 <!-- end product section -->
 
 <!-- cart banner section -->
-<section class="cart-banner pt-100 pb-100">
+<!-- <section class="cart-banner pt-100 pb-100">
 	<div class="container">
 		<div class="row clearfix">
-			<!--Image Column-->
 			<div class="image-column col-lg-6">
 				<div class="image">
-					<!-- <div class="price-box">
+					<div class="price-box">
                         	<div class="inner-price">
                                 <span class="price">
                                     <strong>10%</strong> <br> off per kg
                                 </span>
                             </div>
-                        </div> -->
+                        </div>
 					<img src="assets/img/a (2).jpg" alt="">
 				</div>
 			</div>
-			<!--Content Column-->
 			<div class="content-column col-lg-6">
 				<h3><span class="orange-text">Deal</span> of the month</h3>
 				<h4>Fries, Pizza and coca-cola</h4>
 				<div class="text">Indulge in the ultimate flavor trio with our Deal of the Month! Crispy, golden fries paired with a mouthwatering pizza and a refreshing Coca-Cola—this unbeatable combination is crafted for those who appreciate the perfect harmony of taste.</div>
-				<!--Countdown Timer-->
 				<div class="time-counter">
 					<div class="time-countdown clearfix" data-countdown="2024/6/01">
 						<div class="counter-column">
@@ -147,7 +176,7 @@
 			</div>
 		</div>
 	</div>
-</section>
+</section> -->
 <!-- end cart banner section -->
 
 <!-- shop banner -->

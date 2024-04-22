@@ -141,9 +141,34 @@
                             </div>
                           </div>
                         </div>
-                        <a href="delete_admin.php?id=<?php echo $roww['review_id']; ?>&data=reviews" class="btn btn-outline-danger">
+                        <a href="#" class="btn btn-outline-danger delete-review" data-id="<?php echo $roww['review_id']; ?>">
                           <i class="tf-icons bx bxs-trash"></i>
                         </a>
+                        <script>
+                          document.addEventListener('DOMContentLoaded', function() {
+                            document.querySelectorAll('.delete-review').forEach(function(element) {
+                              element.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                const id = this.getAttribute('data-id');
+
+                                Swal.fire({
+                                  title: 'Are you sure?',
+                                  text: "You won't be able to revert this!",
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#3085d6',
+                                  cancelButtonColor: '#d33',
+                                  confirmButtonText: 'Yes, delete it!'
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    // If confirmed, redirect to delete_admin.php with the appropriate parameters
+                                    window.location.href = `delete_admin.php?id=${id}&data=reviews`;
+                                  }
+                                });
+                              });
+                            });
+                          });
+                        </script>
                       </div>
                     </div>
                   </td>

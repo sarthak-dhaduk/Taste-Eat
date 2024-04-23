@@ -28,6 +28,7 @@ if ($row = mysqli_fetch_assoc($q_temp_user_r)) {
             VALUES ('$username', '$email', '$password', '$user', '$profilepic', '$token')";
             $inserted_result = mysqli_query($con, $query_insert_user);
                 if ($inserted_result) {
+                    $_SESSION['activated'] = true;
                     header("location:login.php");
                     
                     // $_SESSION['u'] = $username;

@@ -14,6 +14,7 @@
 				<div class="contact-form">
 					<form method="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
 						<p><input type="email" placeholder="Email" name="email" id="email"></p>
+						<p id="email-error" style="color: red; display: none;">Please enter your email.</p>
 						<p>Back to Login? <a href="login.php">Login</a></p>
 						<p><input type="submit" name="mail_send" value="SEND"></p>
 					</form>
@@ -48,23 +49,40 @@
 
 								$mail->isHTML(true);
 								$mail->Subject = "Recover your password";
-								$mail->Body = "
-									<section style='margin:10px'>
-										<h1 style='font-size: 30px;'>Hello,<small style='font-size: 20px;'> $username</small></h1>
-										<p style='font-size: 18px;'>We are sending you this mail to recover your account in our website Taste Eat.</p>
-										<a href='http://localhost/main/new_password.php?token=$token' style='background-color: #f18023; padding: 9px; text-decoration: none; color: #ffff; border-radius: 5px;'>Recover Now !</a>
-									</section>
-							";
-
+								$mail->Body = "<section style='margin:10px'>
+									<h1 style='font-size: 30px;'>Hello,<small style='font-size: 20px;'> $username</small></h1>
+									<p style='font-size: 18px;'>We are sending you this mail to recover your account in our website Taste Eat.</p>
+									<a href='http://localhost/main/new_password.php?token=$token' style='background-color: #f18023; padding: 9px; text-decoration: none; color: #ffff; border-radius: 5px;'>Recover Now !</a>
+								</section>";
 								if (!$mail->send()) {
 									echo 'error Email sending failed';
 								} else {
-									header("location:login.php");
+									$_SESSION['email_sent'] = true;
+									$_SESSION['email_sent'] = true;
+									echo '<script>window.location.href = "login.php";</script>';
 								}
 							}
 						}
 					}
 					?>
+					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+					<script>
+						$(document).ready(function() {
+							$('#fruitkha-contact').submit(function(event) {
+								var email = $('#email').val().trim();
+								if (!email) {
+									$('#email').css('border-color', 'red');
+									$('#email-error').show();
+									return false;
+								} else {
+									$('#email').css('border-color', '');
+									$('#email-error').hide();
+								}
+							});
+						});
+					</script>
+
+
 				</div>
 			</div>
 		</div>

@@ -360,6 +360,7 @@ if (isset($_SESSION['u']) && isset($_SESSION['p'])) {
                             if (!$mail->send()) {
                                 echo 'error Email sending failed';
                             } else {
+                                $_SESSION['activation_sent'] = true;
                                 header("location:login.php");
                             }
                         }

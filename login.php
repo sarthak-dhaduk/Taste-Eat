@@ -5,12 +5,12 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
     header("location:index.php");
 }
 if (isset($_SESSION['logout_success']) && $_SESSION['logout_success'] == true) {
-    ?>
+?>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         You have successfully logged out.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <?php
+<?php
     $_SESSION['logout_success'] = false;
 }
 ?>
@@ -48,8 +48,12 @@ if (isset($_SESSION['logout_success']) && $_SESSION['logout_success'] == true) {
     <link rel="stylesheet" href="assets/css/main.css">
     <!-- responsive -->
     <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <body>
 
@@ -164,10 +168,44 @@ if (isset($_SESSION['logout_success']) && $_SESSION['logout_success'] == true) {
         <div class="container">
             <div class="row" style="margin-top: -6rem;">
                 <div class="col-lg-8">
-                    <h2 class="pb-3">Login <span class="orange-text">Here</span></h2>
+                    <h2 class="pb-3" style="font-size: 3rem;"><strong>Login <span class="orange-text">Here</span></strong></h2>
                     <div id="form_status"></div>
                     <div class="contact-form">
                         <form id="fruitkha-contact" method="post" action="login.php" onsubmit="return validateForm()">
+                            <?php if (isset($_SESSION['email_sent'])) : ?>
+                                <div class="alert alert-success alert-dismissible fade show w-50" role="alert">
+                                    <strong>Email sent successfully! |</strong>
+                                    <a href="https://mail.google.com/" class="btn btn-success btn-sm ms-2" target="_blank">Go to Gmail <strong><i class="fa-solid fa-envelope" style="color: #ffffff;"></i></strong></a>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <?php unset($_SESSION['email_sent']); ?>
+                            <?php endif; ?>
+
+                            <?php if (isset($_SESSION['pass_change'])) : ?>
+                                <div class="alert alert-success alert-dismissible fade show w-50" role="alert">
+                                    <strong>Password Has Changed successfully!</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <?php unset($_SESSION['pass_change']); ?>
+                            <?php endif; ?>
+
+                            <?php if (isset($_SESSION['activation_sent'])) : ?>
+                                <div class="alert alert-success alert-dismissible fade show w-50" role="alert">
+                                    <strong>Activation Link sent successfully To Your Mail! |</strong>
+                                    <a href="https://mail.google.com/" class="btn btn-success btn-sm ms-2" target="_blank">Go to Gmail <strong><i class="fa-solid fa-envelope" style="color: #ffffff;"></i></strong></a>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <?php unset($_SESSION['activation_sent']); ?>
+                            <?php endif; ?>
+
+                            <?php if (isset($_SESSION['activated'])) : ?>
+                                <div class="alert alert-success alert-dismissible fade show w-50" role="alert">
+                                    <strong>Your account has been successfully verified!</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <?php unset($_SESSION['activated']); ?>
+                            <?php endif; ?>
+
                             <p><input type="email" placeholder="Enater Email Address..." name="email" id="email"></p>
                             <p><input type="password" placeholder="Enater Password..." name="pwd" id="password"></p>
                             <p><a href="forgetpsw.php">Forget Password ?</a></p>

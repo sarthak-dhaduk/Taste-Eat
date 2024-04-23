@@ -26,10 +26,12 @@ if ($row = mysqli_fetch_assoc($q_temp_user_r)) {
             if ((date('Y-m-d') == $exp_date) && (date('H:i:s') < $exp_time)) {
                 $query_insert_user = "INSERT INTO `register`(`username`, `email`, `password`, `user`, `profilepic`, `token`) 
             VALUES ('$username', '$email', '$password', '$user', '$profilepic', '$token')";
-            $inserted_result = mysqli_query($con, $query_insert_user);
+                $inserted_result = mysqli_query($con, $query_insert_user);
                 if ($inserted_result) {
-                    header("location:login.php");
-                    
+                    $_SESSION['toast_show'] = "true";
+                    $_SESSION['toast_msg'] = "Your account has been activated.";
+                    header("location:login.php?status=activated");
+
                     // $_SESSION['u'] = $username;
                     // $_SESSION['e'] = $email;
                     // $_SESSION['p'] = $password;

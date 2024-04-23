@@ -5,6 +5,17 @@ session_start();
 if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
     header("location:index.php");
 }
+if (isset($_GET['status']) && $_GET['status'] == "activated") {
+    $_SESSION['toast_show'] = "false";
+    $_SESSION['toast_msg'] = "Your account has been activated successfully.";
+    $toastShow = isset($_SESSION['toast_show']);
+}elseif (isset($_GET['status']) && $_GET['status'] == "set") {
+    $_SESSION['toast_show'] = "false";
+    $_SESSION['toast_msg'] = "Your password has been updated successfully.";
+    $toastShow = isset($_SESSION['toast_show']);
+}else{
+    $toastShow = isset($_SESSION['toast_show']);
+}
 ?>
 <?php include_once 'connection.php' ?>
 <!DOCTYPE html>
@@ -41,6 +52,16 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
     <!-- responsive -->
     <link rel="stylesheet" href="assets/css/responsive.css">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS */
+        .position-fixed-bottom-end {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            padding: 1rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -52,6 +73,30 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
         </div>
     </div>
     <!--PreLoader Ends-->
+
+    <div class="position-fixed-bottom-end">
+        <div id="liveToast" class="toast <?= $toastShow ? 'show' : '' ?>" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+            <div class="toast-header py-2" style="background-color: #07212e;">
+                <img src="assets/img/favicon2.png" height="40" width="40" class="rounded mr-2" alt="Placeholder">
+                <strong class="mr-auto" style="color: #F28123;">Taste Eat</strong>
+                <small class="text-light pt-3 p-2">1 sec ago</small>
+                <button type="button" class="close p-2 text-light" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                <?php if (isset($_SESSION['toast_msg'])) {
+                    echo $_SESSION['toast_msg'];
+                } ?>
+                <?php
+                if ($_SESSION['toast_show'] == "true") { ?>
+                    <div class="mt-2 pt-2 border-top">
+                        <a href="https://mail.google.com/" class="btn btn-success" target="_blank">Check Now</a>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
 
     <!-- header -->
     <div class="top-header-area" id="sticker">
@@ -227,7 +272,20 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
     </div>
     <!-- end check out section -->
 
+
     <?php include './include/footer.php' ?>
+    <script>
+        $(document).ready(function() {
+            <?php if ($toastShow) : ?>
+                setTimeout(function() {
+                    $('.toast').toast('show');
+                }, 500);
+            <?php
+                unset($_SESSION['toast_show'], $_SESSION['toast_msg']);
+            endif;
+            ?>
+        });
+    </script>
     <?php
     if (isset($_POST['btn'])) {
         $e = mysqli_real_escape_string($con, $_POST['email']);
@@ -242,15 +300,15 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
         $u = $results_of_status['username'];
         if (mysqli_num_rows($results) == 1) {
 
-                $_SESSION['u'] = $u;
-                $_SESSION['e'] = $e;
-                $_SESSION['p'] = $p;
-                $_SESSION['use'] = $use;
-                if ($use == "admin") {
-                    header("location:index2.php");
-                } else {
-                    header("location:index.php");
-                }
+            $_SESSION['u'] = $u;
+            $_SESSION['e'] = $e;
+            $_SESSION['p'] = $p;
+            $_SESSION['use'] = $use;
+            if ($use == "admin") {
+                header("location:index2.php");
+            } else {
+                header("location:index.php");
+            }
         } else {
     ?>
             <script>

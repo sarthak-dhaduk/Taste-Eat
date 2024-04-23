@@ -37,6 +37,9 @@ session_start();
     <!-- responsive -->
     <link rel="stylesheet" href="assets/css/responsive.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 </head>
 
 <body>

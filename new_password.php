@@ -34,7 +34,7 @@
                                     $result_q_edit_user_1 = mysqli_query($con, $q_edit_user_1);
 
                                     if ($result_q_edit_user_1) {
-                                        header("location:login.php");
+                                        header("location:login.php?status=set");
                                     }
                                 }
                             }

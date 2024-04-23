@@ -337,7 +337,7 @@ if (isset($_SESSION['u']) && isset($_SESSION['p'])) {
                             $mail->SMTPSecure = 'tls';
 
                             $mail->Username = 'sdhaduk666@rku.ac.in';
-                            $mail->Password = '********';
+                            $mail->Password = '7654321@Rku';
 
                             $mail->setFrom('sdhaduk666@rku.ac.in', 'Taste Eat');
                             $mail->addAddress($tomail);
@@ -357,6 +357,8 @@ if (isset($_SESSION['u']) && isset($_SESSION['p'])) {
                             if (!$mail->send()) {
                                 echo 'error Email sending failed';
                             } else {
+                                $_SESSION['toast_show'] = "true";
+							    $_SESSION['toast_msg'] = "We have send you a activation mail to your email.";
                                 header("location:login.php");
                             }
                         }

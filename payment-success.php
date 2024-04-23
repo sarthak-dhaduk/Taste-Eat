@@ -11,7 +11,7 @@ if ($_GET['id']) {
     $q_edit_order_r = mysqli_query($con, $q_edit_order);
 
     if ($q_edit_order_r) {
-      header("location:index3.php");
+      header("location:index3.php?status=done");
     }
 } else {
     header("location:index.php");

@@ -12,7 +12,7 @@
 				<h2 class="pb-3">Recover <span class="orange-text">Now...</span></h2>
 				<div id="form_status"></div>
 				<div class="contact-form">
-					<form method="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
+					<form method="post" action="" id="fruitkha-contact" onSubmit="return valid_datas( this );">
 						<p><input type="email" placeholder="Email" name="email" id="email"></p>
 						<p>Back to Login? <a href="login.php">Login</a></p>
 						<p><input type="submit" name="mail_send" value="SEND"></p>
@@ -21,10 +21,11 @@
 					if (isset($_POST['mail_send'])) {
 						if ($_POST['email'] != "") {
 							$tomail = @$_POST['email'];
-
+							
 							$q_user = "SELECT * FROM `register`  WHERE `email`='$tomail'";
 							$q_user_r = mysqli_query($con, $q_user);
 							if (mysqli_num_rows($q_user_r) == 1) {
+								echo "asdiuwdhiuhwuhdhihwhduqhuh";
 								$user_row = mysqli_fetch_assoc($q_user_r);
 								$token = $user_row['token'];
 								$username = $user_row['username'];
@@ -41,7 +42,7 @@
 								$mail->SMTPSecure = 'tls';
 
 								$mail->Username = 'sdhaduk666@rku.ac.in';
-								$mail->Password = '********';
+								$mail->Password = '7654321@Rku';
 
 								$mail->setFrom('sdhaduk666@rku.ac.in', 'Password Reset');
 								$mail->addAddress($tomail);
@@ -59,6 +60,8 @@
 								if (!$mail->send()) {
 									echo 'error Email sending failed';
 								} else {
+									$_SESSION['toast_show'] = "true";
+									$_SESSION['toast_msg'] = "We have send you a verification mail to your email.";
 									header("location:login.php");
 								}
 							}

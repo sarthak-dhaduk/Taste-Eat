@@ -1,6 +1,7 @@
 <?php
 ob_start();
 session_start();
+
 if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
     header("location:index.php");
 }
@@ -117,12 +118,7 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
                                         </div>
                                         <?php
                                         if (isset($_POST['btn'])) {
-                                            unset($_SESSION['u']);
-                                            unset($_SESSION['p']);
-                                            unset($_SESSION['use']);
-                                            unset($_SESSION['ue']);
-                                            unset($_SESSION['pe']);
-                                            unset($_SESSION['user']);
+                                            session_destroy();
                                             header("location:index.php");
                                         ?>
                                             <div class="header-icons">
@@ -142,7 +138,6 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
                                 </li>
                             </ul>
                         </nav>
-                        <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                         <div class="mobile-menu"></div>
                         <!-- menu end -->
                     </div>
@@ -165,19 +160,9 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
                     <div id="form_status"></div>
                     <div class="contact-form">
                         <form id="fruitkha-contact" method="post" action="login.php" onsubmit="return validateForm()">
-                            <p><input type="text" placeholder="User Name" name="uname" id="uname"></p>
-                            <p><input type="password" placeholder="Password" name="pwd" id="password"></p>
-                            <p>
-                            <div class="dropdown-container">
-                                <label for="dropdown">Login As: </label>
-                                <select name="user" id="dropdown">
-                                    <option value="select">--- Select ---</option>
-                                    <option value="user">User</option>
-                                    <option value="admin">Administrator</option>
-                                </select>
-                            </div>
-                            </p>
-                            <p><a href="forgetpsw.php">Forget Password?</a></p>
+                            <p><input type="email" placeholder="Enater Email Address..." name="email" id="email"></p>
+                            <p><input type="password" placeholder="Enater Password..." name="pwd" id="password"></p>
+                            <p><a href="forgetpsw.php">Forget Password ?</a></p>
                             <p>Don't Have any Account? <a href="register.php">Register</a></p>
                             <p><input type="submit" name="btn" value="Login"></p>
                         </form>
@@ -193,26 +178,20 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
                             });
 
                             function validateForm() {
-                                var uname = $('#uname').val().trim();
+                                var email = $('#email').val().trim();
                                 var password = $('#password').val().trim();
-                                var dropdown = $('#dropdown');
 
                                 // Clear previous error styles and messages
                                 clearErrorStyles();
 
                                 // Simple validation example
-                                if (!uname) {
-                                    displayError('uname', 'User Name is required.');
+                                if (!email) {
+                                    displayError('email', 'User Name is required.');
                                     return false;
                                 }
 
                                 if (!password) {
                                     displayError('password', 'Password is required.');
-                                    return false;
-                                }
-
-                                if (dropdown.prop('selectedIndex') === 0) {
-                                    displayError('dropdown', 'Please select a user type.');
                                     return false;
                                 }
 
@@ -251,21 +230,18 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
     <?php include './include/footer.php' ?>
     <?php
     if (isset($_POST['btn'])) {
-        $u = mysqli_real_escape_string($con, $_POST['uname']);
+        $e = mysqli_real_escape_string($con, $_POST['email']);
         $p = mysqli_real_escape_string($con, $_POST['pwd']);
-        $use = mysqli_real_escape_string($con, $_POST['user']);
 
-        $query = "SELECT * FROM register WHERE username='$u' AND password='$p' AND user='$use'";
+        $query = "SELECT * FROM `register` WHERE `email`='$e' AND `password`='$p'";
         $results = mysqli_query($con, $query);
 
-        $query_of_status = "SELECT * FROM register WHERE username='$u' AND password='$p'";
+        $query_of_status = "SELECT * FROM `register` WHERE `email`='$e' AND `password`='$p'";
         $results_of_status = mysqli_fetch_assoc(mysqli_query($con, $query_of_status));
-        $o_status = $results_of_status['user'];
-        $e=$results_of_status['email'];
-        echo $use;
+        $use = $results_of_status['user'];
+        $u = $results_of_status['username'];
         if (mysqli_num_rows($results) == 1) {
 
-            if ($use == $o_status) {
                 $_SESSION['u'] = $u;
                 $_SESSION['e'] = $e;
                 $_SESSION['p'] = $p;
@@ -275,7 +251,6 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
                 } else {
                     header("location:index.php");
                 }
-            }
         } else {
     ?>
             <script>

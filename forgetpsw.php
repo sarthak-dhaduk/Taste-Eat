@@ -41,7 +41,7 @@
 								$mail->SMTPSecure = 'tls';
 
 								$mail->Username = 'sdhaduk666@rku.ac.in';
-								$mail->Password = '*****';
+								$mail->Password = '********';
 
 								$mail->setFrom('sdhaduk666@rku.ac.in', 'Password Reset');
 								$mail->addAddress($tomail);

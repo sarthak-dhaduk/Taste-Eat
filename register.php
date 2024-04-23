@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_start();
-if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
+if (isset($_SESSION['u']) && isset($_SESSION['p'])) {
     header("location:index.php");
 }
 ?>
@@ -117,12 +117,7 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
                                         </div>
                                         <?php
                                         if (isset($_POST['btn'])) {
-                                            unset($_SESSION['u']);
-                                            unset($_SESSION['p']);
-                                            unset($_SESSION['use']);
-                                            unset($_SESSION['ue']);
-                                            unset($_SESSION['pe']);
-                                            unset($_SESSION['user']);
+                                            session_destroy();
                                             header("location:index.php");
                                         ?>
                                             <div class="header-icons">
@@ -142,7 +137,6 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
                                 </li>
                             </ul>
                         </nav>
-                        <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                         <div class="mobile-menu"></div>
                         <!-- menu end -->
                     </div>
@@ -182,7 +176,6 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
                             <p>Already Have an Account? <a href="login.php">Login</a></p>
                             <p><input type="submit" value="Register" name="btn"></p>
                         </form>
-
                         <script src="/assets/js/jquery-1.11.3.min.js"></script>
                         <script>
                             $(document).ready(function() {
@@ -266,7 +259,6 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
                                 return true;
                             }
                         </script>
-
                     </div>
                 </div>
             </div>
@@ -277,6 +269,7 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
     <?php include './include/footer.php' ?>
     <?php
     if (isset($_POST['btn'])) {
+        $id = uniqid();
         $ue = $_POST['uname'];
         $ee = $_POST['email'];
         $pe = $_POST['pwd'];
@@ -284,6 +277,9 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
         $user = "user";
         $fi = uniqid() . $_FILES['myfile']['name'];
         $token = uniqid();
+        $addon_time = " +" . "30" . " minutes";
+        $exp_time = date("H:i:s", strtotime(date("H:i:s") . $addon_time));
+        $exp_date = date("Y-m-d");
 
         $check_email = "SELECT * FROM register WHERE email = '$ee'";
         $check_user = "SELECT * FROM register WHERE username = '$ue'";
@@ -314,19 +310,58 @@ if (isset($_SESSION['ue']) && isset($_SESSION['pe'])) {
 
                 move_uploaded_file($_FILES['myfile']['tmp_name'], "uploaded_image/" . $fi);
 
-                $q1 = "INSERT INTO register (username, email, password, user, profilepic, token)  
-					VALUES ('$ue', '$ee', '$pe', '$user', '$fi', '$token')";
+                $q1 = "INSERT INTO `temporary_register`(`temp_user_id`, `temp_username`, `temp_email`, `temp_password`, `temp_pic`, `temp_token`, `temp_user`, `exp_time`, `exp_date`) 
+                VALUES ('$id','$ue', '$ee', '$pe', '$fi', '$token', '$user', '$exp_time', '$exp_date')";
 
 
                 if (mysqli_query($con, $q1)) {
 
-                    $_SESSION['u'] = $ue;
-                    $_SESSION['e'] = $ee;
-                    $_SESSION['p'] = $pe;
-                    $_SESSION['use'] = $user;
-                    if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
-                        header("location:index.php");
+                    if ($ee != "") {
+                        $tomail = $ee;
+
+                        $q_user = "SELECT * FROM `register`  WHERE `email`='$tomail'";
+                        $q_user_r = mysqli_query($con, $q_user);
+                        if (mysqli_num_rows($q_user_r) != 1) {
+
+                            $username = $ue;
+
+                            require 'Mail/phpmailer/PHPMailerAutoload.php';
+
+                            $mail = new PHPMailer;
+
+                            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                            $mail->isSMTP();
+                            $mail->Host = 'smtp.gmail.com';
+                            $mail->Port = 587;
+                            $mail->SMTPAuth = true;
+                            $mail->SMTPSecure = 'tls';
+
+                            $mail->Username = 'sdhaduk666@rku.ac.in';
+                            $mail->Password = '********';
+
+                            $mail->setFrom('sdhaduk666@rku.ac.in', 'Taste Eat');
+                            $mail->addAddress($tomail);
+
+                            $mail->isHTML(true);
+                            $mail->Subject = "Urgent : Activate Your Account";
+                            $mail->Body = "
+                                <section style='margin:10px'>
+                                    <h1 style='font-size: 30px;'>Hello,<small style='font-size: 20px;'> $username</small></h1>
+                                    <p style='font-size: 18px;'>We are sending you this mail to activate your account in our website Taste Eat.</p>
+                                    <small style='color: red;'>The activation link will expire after  <b><u> 30 Minutes. </u></b></small><br><br>
+                                    
+                                    <a href='http://localhost/main/activation.php?id=$id' style='background-color: #f18023; padding: 9px; text-decoration: none; color: #ffff; border-radius: 5px;'>Activate</a>
+                                </section>
+                        ";
+
+                            if (!$mail->send()) {
+                                echo 'error Email sending failed';
+                            } else {
+                                header("location:login.php");
+                            }
+                        }
                     }
+
                 }
             } else {
                 echo " Password Is Not Match";

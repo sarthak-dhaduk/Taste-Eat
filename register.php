@@ -40,8 +40,6 @@ if (isset($_SESSION['u']) && isset($_SESSION['p'])) {
     <!-- responsive -->
     <link rel="stylesheet" href="assets/css/responsive.css">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
 </head>
 
 <body>

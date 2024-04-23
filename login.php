@@ -52,7 +52,6 @@ if (isset($_GET['status']) && $_GET['status'] == "activated") {
     <!-- responsive -->
     <link rel="stylesheet" href="assets/css/responsive.css">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <style>
         /* Custom CSS */
         .position-fixed-bottom-end {
@@ -60,6 +59,7 @@ if (isset($_GET['status']) && $_GET['status'] == "activated") {
             bottom: 0;
             right: 0;
             padding: 1rem;
+            z-index: 100;
         }
     </style>
 </head>
@@ -91,7 +91,7 @@ if (isset($_GET['status']) && $_GET['status'] == "activated") {
                 <?php
                 if ($_SESSION['toast_show'] == "true") { ?>
                     <div class="mt-2 pt-2 border-top">
-                        <a href="https://mail.google.com/" class="btn btn-success" target="_blank">Check Now</a>
+                        <a href="https://mail.google.com/" class="btn" target="_blank">Check Now</a>
                     </div>
                 <?php } ?>
             </div>

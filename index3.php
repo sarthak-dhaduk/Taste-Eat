@@ -1,4 +1,54 @@
-<?php include './user_include/header.php' ?>
+<?php include './user_include/header.php' ?> 
+<?php
+
+if (!isset($_SESSION['u']) && !isset($_SESSION['p']) && !isset($_SESSION['use'])) {
+    header("location:index.php");
+}
+
+if (isset($_GET['status']) && $_GET['status'] == "done" && !isset($_SESSION['toast_suc'])) {
+    $_SESSION['toast_show'] = "false";
+    $_SESSION['toast_msg'] = "Your order has been placed successfully.";
+    $toastShow = isset($_SESSION['toast_show']);
+}elseif (isset($_SESSION['toast_suc'])) {
+    unset($_SESSION['toast_show'], $_SESSION['toast_msg'], $_SESSION['toast_suc']);
+    header("location:index3.php");
+}else{
+    $toastShow = isset($_SESSION['toast_show']);
+}
+
+?>
+<style>
+        /* Custom CSS */
+        .position-fixed-bottom-end {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            padding: 1rem;
+            z-index: 100;
+        }
+</style>
+
+<div class="position-fixed-bottom-end">
+        <div id="liveToast" class="toast <?= $toastShow ? 'show' : '' ?>" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+            <div class="toast-header py-2" style="background-color: #07212e;">
+                <img src="assets/img/favicon2.png" height="40" width="40" class="rounded mr-2" alt="Placeholder">
+                <strong class="mr-auto" style="color: #F28123;">Taste Eat</strong>
+                <small class="text-light pt-3 p-2">1 sec ago</small>
+            </div>
+            <div class="toast-body">
+                <?php if (isset($_SESSION['toast_msg'])) {
+                    echo $_SESSION['toast_msg'];
+                } ?>
+                <?php
+                if ($_SESSION['toast_show'] == "true") { ?>
+                    <div class="mt-2 pt-2 border-top">
+                        <a href="https://mail.google.com/" class="btn" target="_blank">Check Now</a>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
@@ -480,3 +530,16 @@
     </div>
 </div>
 <?php include './user_include/footer.php' ?>
+<script>
+        $(document).ready(function() {
+            <?php if ($toastShow) : ?>
+                setTimeout(function() {
+                    $('.toast').toast('show');
+                }, 500);
+            <?php
+                unset($_SESSION['toast_show'], $_SESSION['toast_msg']);
+                $_SESSION['toast_suc'] = "suc";
+            endif;
+            ?>
+        });
+    </script>

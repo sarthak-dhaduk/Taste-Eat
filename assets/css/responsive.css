@@ -309,7 +309,8 @@
 
 	.contact-form form p input[type=text], 
 	.contact-form form p input[type=date], 
-	.contact-form form p input[type=email] {
+	.contact-form form p input[type=email],
+	.contact-form form p input[type=password] {
 	    width: 100%;
 	}
 	.contact-form form p input[type=date] {

@@ -41,6 +41,28 @@
 							<!-- <input type="hidden" name="token" value="FsWga4&@f6aw" /> -->
 							<p><input type="submit" value="Submit" name="contact_btn" onclick="descriptionAcj()"></p>
 						</form>
+						<script>
+							$(document).ready(function() {
+								$('#fruitkha-contact').submit(function(e) {
+									var subject = $('#contact_subject').val();
+									var message = $('#contact_message').val();
+
+									if (subject.trim() === '') {
+										displayErrorMessage('Please enter the subject.', '#contact_subject');
+										e.preventDefault();
+									}
+									if (message.trim() === '') {
+										displayErrorMessage('Please enter your message.', '#contact_message');
+										e.preventDefault();
+									}
+								});
+
+								function displayErrorMessage(message, element) {
+									$(element).next('.error-message').remove();
+									$(element).after('<div class="error-message" style="color: red;">' + message + '</div>');
+								}
+							});
+						</script>
 					<?php } else { ?>
 						<form id="fruitkha-contact">
 							<p>
@@ -54,7 +76,7 @@
 							<p><textarea name="contact_message" id="contact_message" cols="30" rows="10" placeholder="Message"></textarea></p>
 							<!-- <input type="hidden" name="token" value="FsWga4&@f6aw" /> -->
 							<p><a href="login.php" class="cart-btn">Submit</a></p>
-							
+
 						</form>
 					<?php } ?>
 					<script>

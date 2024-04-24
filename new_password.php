@@ -18,6 +18,30 @@
                         <p>Back to Login? <a href="login.php">Login</a></p>
                         <p><input type="submit" name="change_pwd" value="Change Now !"></p>
                     </form>
+                    <script>
+                        $(document).ready(function() {
+                            $('#fruitkha-contact').submit(function(e) {
+                                var pwd = $('#pwd').val();
+                                var cpwd = $('#cpwd').val();
+
+                                if (pwd === '') {
+                                    displayErrorMessage('Please enter your new password.', '#pwd');
+                                    e.preventDefault();
+                                } else if (cpwd === '') {
+                                    displayErrorMessage('Please enter your confirm password.', '#cpwd');
+                                    e.preventDefault();
+                                } else if (pwd !== cpwd) {
+                                    displayErrorMessage('Passwords do not match.', '#cpwd');
+                                    e.preventDefault();
+                                }
+                            });
+
+                            function displayErrorMessage(message, element) {
+                                $(element).next('.error-message').remove();
+                                $(element).after('<div class="error-message" style="color: red;">' + message + '</div>');
+                            }
+                        });
+                    </script>
                     <?php
                     if (isset($_POST['change_pwd'])) {
                         if ($_GET['token'] != "") {

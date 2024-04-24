@@ -20,7 +20,7 @@
                   <div class="row">
                     <div class="col mb-3">
                       <label for="nameWithTitle" class="form-label">New Category</label>
-                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" name="category_name" />
+                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" name="category_name" required/>
                     </div>
                   </div>
                 </div>
@@ -92,7 +92,7 @@
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Category</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $category_roww['category']; ?>" name="edit_category<?php echo $category_roww['category_id']; ?>" />
+                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $category_roww['category']; ?>" name="edit_category<?php echo $category_roww['category_id']; ?>" required/>
                                     </div>
                                   </div>
                                 </div>
@@ -153,7 +153,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                <h5 class="modal-title" id="modalCenterTitle">Item Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form method="post" action="items_list.php" enctype="multipart/form-data">
@@ -161,13 +161,13 @@
                   <div class="row">
                     <div class="col mb-3">
                       <label for="nameWithTitle" class="form-label">Item Name</label>
-                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" name="item_name" />
+                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" name="item_name" required/>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" required></textarea>
                     </div>
                   </div>
                   <div class="row">
@@ -191,13 +191,13 @@
                   <div class="row">
                     <div class="col mb-3">
                       <label for="nameWithTitle" class="form-label">Price</label>
-                      <input type="number" id="nameWithTitle" class="form-control" placeholder="Enter Price" name="price" />
+                      <input type="number" id="nameWithTitle" class="form-control" placeholder="Enter Price" name="price" required/>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col mb-3">
                       <label for="formFile" class="form-label">Item Image</label>
-                      <input class="form-control" type="file" id="formFile" name="item_image">
+                      <input class="form-control" type="file" id="formFile" name="item_image" accept="image/png, image/jpeg" required>
                     </div>
                   </div>
                 </div>
@@ -316,7 +316,7 @@
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                                <h5 class="modal-title" id="modalCenterTitle"><?php echo $roww['item_name']; ?> Details</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <form method="post" action="items_list.php" enctype="multipart/form-data">
@@ -324,13 +324,13 @@
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Item Name</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['item_name']; ?>" name="edit_item_name<?php echo $roww['item_id']; ?>" />
+                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['item_name']; ?>" name="edit_item_name<?php echo $roww['item_id']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_description<?php echo $roww['item_id']; ?>"><?php echo $roww['description']; ?></textarea>
+                                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_description<?php echo $roww['item_id']; ?>" required><?php echo $roww['description']; ?></textarea>
                                     </div>
                                   </div>
                                   <div class="row">
@@ -354,13 +354,13 @@
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Price</label>
-                                      <input type="number" id="nameWithTitle" class="form-control" value="<?php echo $roww['price']; ?>" name="edit_price<?php echo $roww['item_id']; ?>" />
+                                      <input type="number" id="nameWithTitle" class="form-control" value="<?php echo $roww['price']; ?>" name="edit_price<?php echo $roww['item_id']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="formFile" class="form-label">Item Image</label>
-                                      <input class="form-control" type="file" id="formFile" name="edit_item_image<?php echo $roww['item_id']; ?>" required>
+                                      <input class="form-control" type="file" id="formFile" name="edit_item_image<?php echo $roww['item_id']; ?>">
                                     </div>
                                   </div>
                                 </div>
@@ -380,17 +380,31 @@
                                 $edit_price =  @$_POST['edit_price' . $up_item_id];
                                 $edit_description =  @$_POST['edit_description' . $up_item_id];
 
+                                $pic_check = $_FILES['edit_item_image' . $up_item_id]['name'];
+
+
 
                                 if ($edit_item_image != $old_file_name) {
 
-                                  move_uploaded_file($_FILES['edit_item_image' . $up_item_id]['tmp_name'], "uploaded_image/" . $edit_item_image);
-                                  $q_edit_item = "UPDATE items SET item_name = '$edit_item_name', category = '$edit_item_category', item_image = '$edit_item_image', price = '$edit_price', description = '$edit_description' WHERE item_id='$up_item_id'";
-
-                                  $result_edit = mysqli_query($con, $q_edit_item);
-
-                                  if ($result_edit) {
-                                    header("location:items_list.php");
+                                  if ($pic_check != "") {
+                                    move_uploaded_file($_FILES['edit_item_image' . $up_item_id]['tmp_name'], "uploaded_image/" . $edit_item_image);
+                                    $q_edit_item = "UPDATE `items` SET `item_name` = '$edit_item_name', `category` = '$edit_item_category', `item_image` = '$edit_item_image', `price` = '$edit_price', `description` = '$edit_description' WHERE `item_id`='$up_item_id'";
+  
+                                    $result_edit = mysqli_query($con, $q_edit_item);
+  
+                                    if ($result_edit) {
+                                      header("location:items_list.php");
+                                    }
+                                  }else {
+                                    $q_edit_item = "UPDATE `items` SET `item_name` = '$edit_item_name', `category` = '$edit_item_category', `price` = '$edit_price', `description` = '$edit_description' WHERE `item_id`='$up_item_id'";
+  
+                                    $result_edit = mysqli_query($con, $q_edit_item);
+  
+                                    if ($result_edit) {
+                                      header("location:items_list.php");
+                                    }
                                   }
+
                                 }
                               }
                               ?>

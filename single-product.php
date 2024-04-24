@@ -38,7 +38,7 @@ if (mysqli_num_rows($qr2) == 1) {
 						<p><?php echo $roww['description']; ?></p>
 						<div class="single-product-form">
 							<form action="index.php">
-								<input type="number" id="qn" value="0" min="0" max="12" onblur="getQuantity()" onchange="totle()">
+								<input type="number" id="qn" value="1" min="1" max="12" onblur="getQuantity()" onchange="totle()">
 								<script>
 									document.getElementById("qn").addEventListener("keydown", e => e.keyCode != 38 && e.keyCode != 40 && e.preventDefault());
 								</script>
@@ -72,7 +72,7 @@ if (mysqli_num_rows($qr2) == 1) {
 														<div class="input-group-prepend">
 															<span class="input-group-text" id="inputGroup-sizing-lg">Quantity</span>
 														</div>
-														<input type="number" id="qnm" name="quantity" value="0" min="0" max="12" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" onchange="totleM()" onblur="changedQ()">
+														<input type="number" id="qnm" name="quantity" value="1" min="1" max="12" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" onchange="totleM()" onblur="changedQ()">
 														<script>
 															function getQuantity() {
 																var quantity = document.getElementById("qn");
@@ -279,11 +279,11 @@ if (mysqli_num_rows($qr2) == 1) {
 								</div>
 								<form method="post">
 									<div class="modal-body">
-										<div class="input-group input-group-lg">
+										<div class="input-group input-group-lg d-flex">
 											<div class="input-group-prepend">
 												<strong class="m-2">★</strong><input type="text" value="" name="rating" class="" style="width: 30px; border: 0;" readonly>
 											</div>
-											<textarea cols="100" rows="3" placeholder="Message" name="review_comment" id="review_comment"></textarea>
+											<textarea class="p-2" cols="50" rows="1" placeholder="Message" name="review_comment" id="review_comment"></textarea>
 
 										</div>
 									</div>
@@ -298,6 +298,23 @@ if (mysqli_num_rows($qr2) == 1) {
 										</script>
 									</div>
 								</form>
+								<script>
+									$(document).ready(function() {
+										$('form').submit(function(e) {
+											var comment = $('#review_comment').val();
+
+											if (comment.trim() === '') {
+												displayErrorMessage('Please enter your message.', '#review_comment');
+												e.preventDefault();
+											}
+										});
+
+										function displayErrorMessage(message, element) {
+											$(element).next('.error-message').remove();
+											$(element).after('<div class="error-message pl-5 ml-md-3" style="color: red;">' + message + '</div>');
+										}
+									});
+								</script>
 								<script>
 									const radioButtons = document.getElementsByName('rating3');
 
@@ -420,6 +437,28 @@ if (isset($_SESSION['u']) && isset($_SESSION['p']) && isset($_SESSION['use'])) {
 					<!-- <input type="hidden" name="token" value="FsWga4&@f6aw" /> -->
 					<p><input type="submit" value="Submit" name="issue_btn" onclick="descriptionIssue()"></p>
 				</form>
+				<script>
+					$(document).ready(function() {
+						$('#fruitkha-contact').submit(function(e) {
+							var subject = $('#issue_subject').val();
+							var message = $('#issue_message').val();
+
+							if (subject.trim() === '') {
+								displayErrorMessage('Please enter the subject.', '#issue_subject');
+								e.preventDefault();
+							}
+							if (message.trim() === '') {
+								displayErrorMessage('Please enter your message.', '#issue_message');
+								e.preventDefault();
+							}
+						});
+
+						function displayErrorMessage(message, element) {
+							$(element).next('.error-message').remove();
+							$(element).after('<div class="error-message" style="color: red;">' + message + '</div>');
+						}
+					});
+				</script>
 				<script>
 					function descriptionIssue() {
 						const descriptionIssuee = document.getElementById('issue_message').value;

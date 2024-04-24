@@ -217,36 +217,36 @@
                                     <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                   </div>
-                                  <form method="post" action="index2.php" enctype="multipart/form-data">
+                                  <form method="post" action="index2.php" enctype="multipart/form-data" id="fruitkha-contact">
                                     <div class="modal-body">
                                       <div class="row">
                                         <div class="col mb-3">
                                           <label for="nameWithTitle" class="form-label">User Name</label>
-                                          <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['issue_id']; ?>" />
+                                          <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['issue_id']; ?>" readonly/>
                                         </div>
                                       </div>
                                       <div class="row">
                                         <div class="col mb-3">
                                           <label for="nameWithTitle" class="form-label">Email</label>
-                                          <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['issue_id']; ?>" />
+                                          <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['issue_id']; ?>" readonly/>
                                         </div>
                                       </div>
                                       <div class="row">
                                         <div class="col mb-3">
                                           <label for="nameWithTitle" class="form-label">Date</label>
-                                          <input type="date" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['date']; ?>" name="edit_date<?php echo $roww['issue_id']; ?>" />
+                                          <input type="date" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['date']; ?>" name="edit_date<?php echo $roww['issue_id']; ?>" required/>
                                         </div>
                                       </div>
                                       <div class="row">
                                         <div class="col mb-3">
                                           <label for="nameWithTitle" class="form-label">Subject</label>
-                                          <input type="text" id="nameWithTitle" class="form-control" value="<?php echo $roww['subject']; ?>" name="edit_subject<?php echo $roww['issue_id']; ?>" />
+                                          <input type="text" id="nameWithTitle" class="form-control" value="<?php echo $roww['subject']; ?>" name="edit_subject<?php echo $roww['issue_id']; ?>" required/>
                                         </div>
                                       </div>
                                       <div class="row">
                                         <div class="col mb-3">
-                                          <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_description<?php echo $roww['issue_id']; ?>"><?php echo $roww['description']; ?></textarea>
+                                          <label for="description" class="form-label">Description</label>
+                                          <textarea class="form-control" id="description" rows="3" name="edit_description<?php echo $roww['issue_id']; ?>" required><?php echo $roww['description']; ?></textarea>
                                         </div>
                                       </div>
                                     </div>
@@ -257,7 +257,16 @@
                                       <button type="submit" class="btn btn-primary" name="edit_issue<?php echo $roww['issue_id']; ?>">Update</button>
                                     </div>
                                   </form>
+                                  <script>
+                                    document.getElementById('fruitkha-contact').addEventListener('submit', function(event) {
+                                      descriptionIssue();
+                                    });
 
+                                    function descriptionIssue() {
+                                      const descriptionIssuee = document.getElementById('description').value;
+                                      document.getElementById('description').value = descriptionIssuee.replace(/['"]/g, match => match === "'" ? "''" : '""');
+                                    }
+                                  </script>
                                   <?php
                                   if (isset($_POST['edit_issue' . $up_issue_id])) {
                                     $edit_user_name = @$_POST['edit_user_name' . $up_issue_id];

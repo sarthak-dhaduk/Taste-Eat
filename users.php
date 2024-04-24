@@ -54,7 +54,7 @@
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                                <h5 class="modal-title" id="modalCenterTitle"><?php echo $roww['username']; ?> Details</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <form method="post" action="users.php" enctype="multipart/form-data">
@@ -62,31 +62,31 @@
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">User Name</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['username']; ?>" name="edit_username<?php echo $roww['username']; ?>" />
+                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['username']; ?>" name="edit_username<?php echo $roww['username']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Email</label>
-                                      <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['username']; ?>" />
+                                      <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['username']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Password</label>
-                                      <input type="password" id="nameWithTitle" class="form-control" placeholder="Enter Password" value="<?php echo $roww['password']; ?>" name="edit_pwd<?php echo $roww['username']; ?>" />
+                                      <input type="password" id="nameWithTitle" class="form-control" placeholder="Enter Password" value="<?php echo $roww['password']; ?>" name="edit_pwd<?php echo $roww['username']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Conform Password</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Conform Password" value="<?php echo $roww['password']; ?>" name="edit_cpwd<?php echo $roww['username']; ?>" />
+                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Conform Password" value="<?php echo $roww['password']; ?>" name="edit_cpwd<?php echo $roww['username']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Role</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Role" value="<?php echo $roww['user']; ?>" name="edit_user<?php echo $roww['username']; ?>" />
+                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Role" value="<?php echo $roww['user']; ?>" name="edit_user<?php echo $roww['username']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">

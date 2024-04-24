@@ -17,15 +17,38 @@
 						<p>Back to Login? <a href="login.php">Login</a></p>
 						<p><input type="submit" name="mail_send" value="SEND"></p>
 					</form>
+					<script>
+						$(document).ready(function() {
+							$('#fruitkha-contact').submit(function(e) {
+								var email = $('#email').val();
+								if (email == '') {
+									displayErrorMessage('Please enter your email.', '#email');
+									e.preventDefault();
+								} else if (!isValidEmail(email)) {
+									displayErrorMessage('Please enter a valid email address.', '#email');
+									e.preventDefault();
+								}
+							});
+
+							function isValidEmail(email) {
+								var emailRegex = /\S+@\S+\.\S+/;
+								return emailRegex.test(email);
+							}
+
+							function displayErrorMessage(message, element) {
+								$(element).next('.error-message').remove();
+								$(element).after('<div class="error-message" style="color: red;">' + message + '</div>');
+							}
+						});
+					</script>
 					<?php
 					if (isset($_POST['mail_send'])) {
 						if ($_POST['email'] != "") {
 							$tomail = @$_POST['email'];
-							
+
 							$q_user = "SELECT * FROM `register`  WHERE `email`='$tomail'";
 							$q_user_r = mysqli_query($con, $q_user);
 							if (mysqli_num_rows($q_user_r) == 1) {
-								echo "asdiuwdhiuhwuhdhihwhduqhuh";
 								$user_row = mysqli_fetch_assoc($q_user_r);
 								$token = $user_row['token'];
 								$username = $user_row['username'];
@@ -55,7 +78,7 @@
 										<p style='font-size: 18px;'>We are sending you this mail to recover your account in our website Taste Eat.</p>
 										<a href='http://localhost/main/new_password.php?token=$token' style='background-color: #f18023; padding: 9px; text-decoration: none; color: #ffff; border-radius: 5px;'>Recover Now !</a>
 									</section>
-							";
+									";
 
 								if (!$mail->send()) {
 									echo 'error Email sending failed';
@@ -64,6 +87,18 @@
 									$_SESSION['toast_msg'] = "We have send you a verification mail to your email.";
 									header("location:login.php");
 								}
+							} else {
+								echo "
+            <script>
+                $(document).ready(function() {
+                    displayErrorMessage('This email is not registered with us.', '#email');
+                });
+
+                function displayErrorMessage(message, element) {
+                    $(element).next('.error-message').remove();
+                    $(element).after('<div class=\"error-message\" style=\"color: red;\">' + message + '</div>');
+                }
+            </script>";
 							}
 						}
 					}

@@ -3,7 +3,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">Contact/</span> Contact List</h4>
         <div class="card">
-            <h5 class="card-header" style="font-size: 1.5rem;">All Reviews</h5>
+            <h5 class="card-header" style="font-size: 1.5rem;">All Contact</h5>
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover">
                     <thead>
@@ -76,39 +76,39 @@
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                                                                <h5 class="modal-title" id="modalCenterTitle"><?php echo $roww['user_name']; ?> Details</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <form method="post" action="contact_us.php" enctype="multipart/form-data">
+                                                            <form method="post" action="contact_us.php" enctype="multipart/form-data" id="fruitkha-contact">
                                                                 <div class="modal-body">
                                                                     <div class="row">
                                                                         <div class="col mb-3">
                                                                             <label for="nameWithTitle" class="form-label">User Name</label>
-                                                                            <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['contact_id']; ?>" />
+                                                                            <input type="text" id="username" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['contact_id']; ?>" readonly/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col mb-3">
                                                                             <label for="nameWithTitle" class="form-label">Email</label>
-                                                                            <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['contact_id']; ?>" />
+                                                                            <input type="email" id="email" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['contact_id']; ?>" readonly/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col mb-3">
                                                                             <label for="nameWithTitle" class="form-label">Date</label>
-                                                                            <input type="date" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['date']; ?>" name="edit_date<?php echo $roww['contact_id']; ?>" />
+                                                                            <input type="date" id="date" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['date']; ?>" name="edit_date<?php echo $roww['contact_id']; ?>" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col mb-3">
                                                                             <label for="nameWithTitle" class="form-label">Subject</label>
-                                                                            <input type="text" id="nameWithTitle" class="form-control" value="<?php echo $roww['subject']; ?>" name="edit_subject<?php echo $roww['contact_id']; ?>" />
+                                                                            <input type="text" id="subject" class="form-control" value="<?php echo $roww['subject']; ?>" name="edit_subject<?php echo $roww['contact_id']; ?>" required/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col mb-3">
                                                                             <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_description<?php echo $roww['contact_id']; ?>"><?php echo $roww['description']; ?></textarea>
+                                                                            <textarea class="form-control" id="description" rows="3" name="edit_description<?php echo $roww['contact_id']; ?>" required><?php echo $roww['description']; ?></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -116,14 +116,18 @@
                                                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                                                         Close
                                                                     </button>
-                                                                    <button type="submit" class="btn btn-primary" onclick="descriptionIssue()" name="edit_contact<?php echo $roww['contact_id']; ?>">Update</button>
+                                                                    <button type="submit" class="btn btn-primary" name="edit_contact<?php echo $roww['contact_id']; ?>">Update</button>
                                                                 </div>
                                                             </form>
                                                             <script>
+                                                                document.getElementById('fruitkha-contact').addEventListener('submit', function(event) {
+                                                                    descriptionIssue();
+                                                                });
+
                                                                 function descriptionIssue() {
-                                                                    const descriptionIssuee = document.getElementById('exampleFormControlTextarea1').value;
-                                                                    document.getElementById('exampleFormControlTextarea1').value = descriptionIssuee.replace(/['"]/g, match => match === "'" ? "''" : '""');
-                                                                };
+                                                                    const descriptionIssuee = document.getElementById('description').value;
+                                                                    document.getElementById('description').value = descriptionIssuee.replace(/['"]/g, match => match === "'" ? "''" : '""');
+                                                                }
                                                             </script>
                                                             <?php
                                                             if (isset($_POST['edit_contact' . $up_contact_id])) {

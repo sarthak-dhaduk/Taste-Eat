@@ -71,57 +71,57 @@
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                                <h5 class="modal-title" id="modalCenterTitle"><?php echo $roww['user_name']; ?> Details</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-                              <form method="post" action="order_list.php" enctype="multipart/form-data">
+                              <form method="post" action="order_list.php" enctype="multipart/form-data" id="fruitkha-contact">
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">User Name</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['order_id']; ?>" />
+                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['order_id']; ?>" readonly/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Email</label>
-                                      <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['order_id']; ?>" />
+                                      <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['order_id']; ?>" readonly/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Item Name</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['item_name']; ?>" name="edit_item_name<?php echo $roww['order_id']; ?>" />
+                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['item_name']; ?>" name="edit_item_name<?php echo $roww['order_id']; ?>" readonly/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Date</label>
-                                      <input type="date" id="nameWithTitle" class="form-control" value="<?php echo date('Y-m-d'); ?>" name="edit_item_date<?php echo $roww['order_id']; ?>" />
+                                      <input type="date" id="nameWithTitle" class="form-control" value="<?php echo date('Y-m-d'); ?>" name="edit_item_date<?php echo $roww['order_id']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Time</label>
-                                      <input type="time" id="nameWithTitle" class="form-control" value="<?php echo date("H:i:s"); ?>" name="edit_item_time<?php echo $roww['order_id']; ?>" />
+                                      <input type="time" id="nameWithTitle" class="form-control" value="<?php echo date("H:i:s"); ?>" name="edit_item_time<?php echo $roww['order_id']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="exampleFormControlTextarea1" class="form-label">Address</label>
-                                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_address<?php echo $roww['order_id']; ?>"><?php echo $roww['address']; ?></textarea>
+                                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_address<?php echo $roww['order_id']; ?>" readonly><?php echo $roww['address']; ?></textarea>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="formFile" class="form-label">Quantity</label>
-                                      <input class="form-control" type="number" id="nameWithTitle" value="<?php echo $roww['quantity']; ?>" name="edit_quantity<?php echo $roww['order_id']; ?>" min="1" max="12">
+                                      <input class="form-control" type="number" id="nameWithTitle" value="<?php echo $roww['quantity']; ?>" name="edit_quantity<?php echo $roww['order_id']; ?>" min="1" max="12" required>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Price</label>
-                                      <input type="number" id="nameWithTitle" class="form-control" value="<?php echo $roww['price']; ?>" name="edit_price<?php echo $roww['order_id']; ?>" />
+                                      <input type="number" id="nameWithTitle" class="form-control" value="<?php echo $roww['price']; ?>" name="edit_price<?php echo $roww['order_id']; ?>" required/>
                                     </div>
                                   </div>
                                   <div class="row">

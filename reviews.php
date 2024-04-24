@@ -76,39 +76,39 @@
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                                <h5 class="modal-title" id="modalCenterTitle"><?php echo $roww['user_name']; ?> Details</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-                              <form method="post" action="reviews.php" enctype="multipart/form-data">
+                              <form method="post" action="reviews.php" enctype="multipart/form-data" id="fruitkha-contact">
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">User Name</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['review_id']; ?>" />
+                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter User Name" value="<?php echo $roww['user_name']; ?>" name="edit_user_name<?php echo $roww['review_id']; ?>" readonly/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Email</label>
-                                      <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['review_id']; ?>" />
+                                      <input type="email" id="nameWithTitle" class="form-control" placeholder="Enter Email ID" value="<?php echo $roww['email']; ?>" name="edit_email<?php echo $roww['review_id']; ?>" readonly/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Item Name</label>
-                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['item_name']; ?>" name="edit_item_name<?php echo $roww['review_id']; ?>" />
+                                      <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Item Name" value="<?php echo $roww['item_name']; ?>" name="edit_item_name<?php echo $roww['review_id']; ?>" readonly/>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_description<?php echo $roww['review_id']; ?>"><?php echo $roww['description']; ?></textarea>
+                                      <textarea class="form-control" id="description" rows="3" name="edit_description<?php echo $roww['review_id']; ?>" required><?php echo $roww['description']; ?></textarea>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col mb-3">
                                       <label for="nameWithTitle" class="form-label">Rating</label>
-                                      <input type="number" id="nameWithTitle" class="form-control" value="<?php echo $roww['rating']; ?>" name="edit_rating<?php echo $roww['review_id']; ?>" />
+                                      <input type="number" id="nameWithTitle" class="form-control" value="<?php echo $roww['rating']; ?>" name="edit_rating<?php echo $roww['review_id']; ?>" required/>
                                     </div>
                                   </div>
                                 </div>
@@ -119,7 +119,16 @@
                                   <button type="submit" class="btn btn-primary" name="edit_review<?php echo $roww['review_id']; ?>">Update</button>
                                 </div>
                               </form>
+                              <script>
+                                document.getElementById('fruitkha-contact').addEventListener('submit', function(event) {
+                                  descriptionIssue();
+                                });
 
+                                function descriptionIssue() {
+                                  const descriptionIssuee = document.getElementById('description').value;
+                                  document.getElementById('description').value = descriptionIssuee.replace(/['"]/g, match => match === "'" ? "''" : '""');
+                                }
+                              </script>
                               <?php
                               if (isset($_POST['edit_review' . $up_review_id])) {
                                 $edit_user_name = @$_POST['edit_user_name' . $up_review_id];
@@ -129,7 +138,15 @@
                                 $edit_description =  @$_POST['edit_description' . $up_review_id];
 
 
-                                $q_edit_item = "UPDATE `review` SET `item_name` = '$edit_item_name', `user_name` = '$edit_user_name', `email` = '$edit_email', `rating` = '$edit_rating', `description` = '$edit_description' WHERE `review_id`='$up_review_id'";
+                                $q_edit_item = "UPDATE `review` 
+                        SET `item_name` = '$edit_item_name',
+                         `user_name` = '$edit_user_name',
+                          `email` = '$edit_email',
+                           `rating` = '$edit_rating',
+                            `description` = '$edit_description'
+                             WHERE `review_id`='$up_review_id'";
+
+                                echo $q_edit_item;
 
                                 $result_edit = mysqli_query($con, $q_edit_item);
 

@@ -42,7 +42,7 @@
 
 		<div class="row product-lists">
 			<?php
-			$q2 = "SELECT * FROM items";
+			$q2 = "SELECT * FROM `items` ORDER BY RAND()";
 			$qr2 = mysqli_query($con, $q2);
 			if (mysqli_num_rows($qr2) > 0) {
 				while ($roww = mysqli_fetch_assoc($qr2)) {
